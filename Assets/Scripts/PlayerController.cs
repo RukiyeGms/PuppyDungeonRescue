@@ -7,27 +7,39 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     bool isGrounded;
     InputAction jumpAction;
+    InputAction moveAction;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
+    bool faceRight;
 
     [SerializeField] float speed = 8f;
     [SerializeField] float jumpForce = 15f;
     [SerializeField] float gravity = 3f;
     [SerializeField] float fallMult = 2f;
     [SerializeField] float lowJumpMult = 2f;
-    
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        //circleCollider = GetComponentInChildren<CircleCollider2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+      
         isGrounded = false;
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
+        moveAction = GetComponent<PlayerInput>().actions["Move"];
 
     }
 
     void Start()
     {
         rb.gravityScale = gravity;
-        
+
+    }
+
+    private void Update()
+    {
+        AnimationManager();
     }
 
     void FixedUpdate()
@@ -39,6 +51,15 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        if ( moveInput.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if ( moveInput.x < 0) 
+        {
+        
+            spriteRenderer.flipX = true;
+        }
     }
 
     void OnJump(InputValue value)
@@ -48,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocityY = jumpForce;
         }
-        
+
     }
 
 
@@ -84,6 +105,16 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = gravity * lowJumpMult;
         }
     }
-    
+
+    void AnimationManager()
+    {
+
+        if (moveAction.IsPressed() && isGrounded)
+        {
+            animator.SetBool("MoveAction", true);
+        }
+        else { animator.SetBool("MoveAction", false); }
+
+    }
 
 }
