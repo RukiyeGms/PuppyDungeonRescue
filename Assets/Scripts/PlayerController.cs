@@ -30,26 +30,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        if (rb.linearVelocityY == 0f)
-        {
-            rb.gravityScale = gravity;
-        }
-        else if (rb.linearVelocityY < 0f)
-        {
-            rb.gravityScale = gravity * fallMult;
-        }
-        else if ( rb.linearVelocityY > 0f && !jumpAction.IsPressed())
-        {
-            rb.gravityScale = gravity * lowJumpMult;
-        }
-
-           
-    }
-
     void FixedUpdate()
     {
+        AdjustGravity();
         rb.linearVelocityX = moveInput.x * speed;
     }
 
@@ -85,5 +68,22 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    private void AdjustGravity()
+    {
+        if (isGrounded)
+        {
+            rb.gravityScale = gravity;
+        }
+        else if (rb.linearVelocityY < 0f)
+        {
+            rb.gravityScale = gravity * fallMult;
+        }
+        else if (rb.linearVelocityY > 0f && !jumpAction.IsPressed())
+        {
+            rb.gravityScale = gravity * lowJumpMult;
+        }
+    }
+    
 
 }
