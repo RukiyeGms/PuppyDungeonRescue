@@ -6,17 +6,21 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D rb;
     bool isGrounded;
+    bool wall;
     InputAction jumpAction;
     InputAction moveAction;
     Animator animator;
     SpriteRenderer spriteRenderer;
-    bool faceRight;
+    Transform playertransform;
+  
 
     [SerializeField] float speed = 8f;
     [SerializeField] float jumpForce = 20f;
     [SerializeField] float gravity = 4f;
     [SerializeField] float fallMult = 2f;
     [SerializeField] float lowJumpMult = 2f;
+    [SerializeField] GroundCheck groundCheck;
+    [SerializeField] WallCheck wallCheck;
 
 
     private void Awake()
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playertransform = GetComponent<Transform>();
       
         isGrounded = false;
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
@@ -40,6 +45,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         AnimationManager();
+        Debug.Log(wall);
     }
 
     void FixedUpdate()
@@ -53,12 +59,12 @@ public class PlayerController : MonoBehaviour
         moveInput = value.Get<Vector2>();
         if ( moveInput.x > 0)
         {
-            spriteRenderer.flipX = false;
+            playertransform.rotation = Quaternion.Euler(0, 0,0 );
         }
         else if ( moveInput.x < 0) 
         {
-        
-            spriteRenderer.flipX = true;
+
+            playertransform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
@@ -72,24 +78,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //TRIGGER
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            isGrounded = true;
-            animator.SetBool("isGrounded", true);
-        }
+        isGrounded = groundCheck.isGrounded;
+        wall = wallCheck.wall;
 
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            isGrounded = false;
-            animator.SetBool("isGrounded", false);
-        }
+        isGrounded = groundCheck.isGrounded;
+        wall = wallCheck.wall;
     }
 
     private void AdjustGravity()
