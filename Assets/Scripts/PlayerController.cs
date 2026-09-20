@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     bool faceRight;
 
     [SerializeField] float speed = 8f;
-    [SerializeField] float jumpForce = 15f;
-    [SerializeField] float gravity = 3f;
+    [SerializeField] float jumpForce = 20f;
+    [SerializeField] float gravity = 4f;
     [SerializeField] float fallMult = 2f;
     [SerializeField] float lowJumpMult = 2f;
 
