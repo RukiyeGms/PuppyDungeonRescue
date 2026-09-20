@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("isGrounded", true);
         }
 
     }
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             isGrounded = false;
+            animator.SetBool("isGrounded", false);
         }
     }
 
@@ -99,6 +101,7 @@ public class PlayerController : MonoBehaviour
         else if (rb.linearVelocityY < 0f)
         {
             rb.gravityScale = gravity * fallMult;
+            
         }
         else if (rb.linearVelocityY > 0f && !jumpAction.IsPressed())
         {
@@ -108,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
     void AnimationManager()
     {
+        animator.SetFloat("velocityY", rb.linearVelocityY);
 
         if (moveAction.IsPressed() && isGrounded)
         {
