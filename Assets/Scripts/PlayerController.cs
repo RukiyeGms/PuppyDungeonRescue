@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     Transform playertransform;
+
+    int maxJump = 2;
+    int jumpCount;
+
   
 
     [SerializeField] float speed = 8f;
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb.gravityScale = gravity;
+        jumpCount = 0;
 
     }
 
@@ -71,9 +76,10 @@ public class PlayerController : MonoBehaviour
     void OnJump(InputValue value)
     {
 
-        if (isGrounded)
+        if (isGrounded || jumpCount < maxJump )
         {
             rb.linearVelocityY = jumpForce;
+            jumpCount++;
         }
 
     }
@@ -83,6 +89,13 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         isGrounded = groundCheck.isGrounded;
+        if (isGrounded)
+        {
+
+            jumpCount = 0;
+
+        }
+
         wall = wallCheck.wall;
 
     }
