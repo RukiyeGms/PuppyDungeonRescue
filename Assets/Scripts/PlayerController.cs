@@ -5,18 +5,18 @@ public class PlayerController : MonoBehaviour
 {
     Vector2 moveInput;
     Rigidbody2D rb;
-    bool isGrounded;
-    bool wall;
+    
     InputAction jumpAction;
     InputAction moveAction;
-    Animator animator;
-    SpriteRenderer spriteRenderer;
+    Animator playerAnimator;
     Transform playertransform;
 
     int maxJump = 2;
-    int jumpCount;
+    public int jumpCount;
 
-  
+    public bool isGrounded;
+    public bool wall;
+
 
     [SerializeField] float speed = 8f;
     [SerializeField] float jumpForce = 20f;
@@ -30,8 +30,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerAnimator = GetComponent<Animator>();
         playertransform = GetComponent<Transform>();
       
         isGrounded = false;
@@ -79,6 +78,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded || jumpCount < maxJump )
         {
             rb.linearVelocityY = jumpForce;
+            playerAnimator.SetTrigger("jumping");
             jumpCount++;
         }
 
@@ -86,25 +86,7 @@ public class PlayerController : MonoBehaviour
 
     //TRIGGER
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        isGrounded = groundCheck.isGrounded;
-        if (isGrounded)
-        {
 
-            jumpCount = 0;
-
-        }
-
-        wall = wallCheck.wall;
-
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        isGrounded = groundCheck.isGrounded;
-        wall = wallCheck.wall;
-    }
 
     private void AdjustGravity()
     {
@@ -115,23 +97,33 @@ public class PlayerController : MonoBehaviour
         else if (rb.linearVelocityY < 0f)
         {
             rb.gravityScale = gravity * fallMult;
-            
+           
         }
         else if (rb.linearVelocityY > 0f && !jumpAction.IsPressed())
         {
             rb.gravityScale = gravity * lowJumpMult;
+            
         }
+    }
+
+
+    public void SetGrounded(bool isGrounded)
+    {
+        this.isGrounded = isGrounded;
+        playerAnimator.SetBool("isGrounded", isGrounded);
+        if (isGrounded) jumpCount = 0;
+
     }
 
     void AnimationManager()
     {
-        animator.SetFloat("velocityY", rb.linearVelocityY);
+        playerAnimator.SetFloat("velocityY", rb.linearVelocityY);
 
         if (moveAction.IsPressed() && isGrounded)
         {
-            animator.SetBool("MoveAction", true);
+            playerAnimator.SetBool("MoveAction", true);
         }
-        else { animator.SetBool("MoveAction", false); }
+        else { playerAnimator.SetBool("MoveAction", false); }
 
     }
 

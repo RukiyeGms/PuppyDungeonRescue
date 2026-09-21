@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class WallCheck : MonoBehaviour
 {
-    public bool wall;
+    
+    [SerializeField] PlayerController playerController;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            wall = true;
+            
+            playerController.wall = true;
         }
 
     }
@@ -17,7 +19,8 @@ public class WallCheck : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            wall = false;
+            
+            playerController.wall = false;
         }
     }
 }

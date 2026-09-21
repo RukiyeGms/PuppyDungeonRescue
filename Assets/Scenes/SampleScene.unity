@@ -317,6 +317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5aa3e66e1dceec42be559ce8967e082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  jumpCount: 0
+  isGrounded: 0
+  wall: 0
   speed: 8
   jumpForce: 15
   gravity: 3
@@ -422,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f86076cf4eca13448af17d3b2fdbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WallCheck
-  wall: 0
+  playerController: {fileID: 247204518}
 --- !u!61 &469350433
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1174,7 +1177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea036f299a935464d99811b562eb7512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundCheck
-  isGrounded: 0
+  playerController: {fileID: 247204518}
 --- !u!1 &1623605908
 GameObject:
   m_ObjectHideFlags: 0

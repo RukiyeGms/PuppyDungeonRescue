@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    public bool isGrounded;
-    Animator animator;
 
-    private void Awake()
-    {
-        animator = GetComponentInParent<Animator>();
-    }
+    [SerializeField] PlayerController playerController;
+  
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            isGrounded = true;
-            animator.SetBool("isGrounded", true);
+            playerController.SetGrounded(true);
         }
 
     }
@@ -24,8 +20,8 @@ public class GroundCheck : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            isGrounded = false;
-            animator.SetBool("isGrounded", false);
+
+            playerController.SetGrounded(false);
         }
     }
 }
