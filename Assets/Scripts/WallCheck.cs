@@ -9,8 +9,8 @@ public class WallCheck : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            
-            playerController.wall = true;
+
+            playerController.SetWall(true);
         }
 
     }
@@ -19,8 +19,8 @@ public class WallCheck : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            
-            playerController.wall = false;
+
+            playerController.SetWall(false);
         }
     }
 }

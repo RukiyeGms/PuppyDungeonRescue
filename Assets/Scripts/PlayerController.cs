@@ -14,8 +14,11 @@ public class PlayerController : MonoBehaviour
     int maxJump = 2;
     public int jumpCount;
 
-    public bool isGrounded;
-    public bool wall;
+    bool isGrounded;
+    bool wall;
+
+    //bool isWallSliding;
+    [SerializeField] float wallSlideSpeed = 3f;
 
 
     [SerializeField] float speed = 8f;
@@ -34,6 +37,8 @@ public class PlayerController : MonoBehaviour
         playertransform = GetComponent<Transform>();
       
         isGrounded = false;
+        wall = false;
+        //isWallSliding = false;
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
         moveAction = GetComponent<PlayerInput>().actions["Move"];
 
@@ -48,13 +53,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        AnimationManager();
         Debug.Log(wall);
     }
 
     void FixedUpdate()
     {
+        AnimationManager();
         AdjustGravity();
+        WallSlide();
         rb.linearVelocityX = moveInput.x * speed;
     }
 
@@ -84,9 +90,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //TRIGGER
-
-
 
     private void AdjustGravity()
     {
@@ -106,7 +109,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    //wallcheck and ground check
     public void SetGrounded(bool isGrounded)
     {
         this.isGrounded = isGrounded;
@@ -114,6 +117,26 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) jumpCount = 0;
 
     }
+
+    public void SetWall(bool wall)
+    {
+        this.wall = wall;
+    }
+
+    public void WallSlide()
+    {
+        if (wall && !isGrounded && moveAction.IsPressed()) 
+        {
+            //isWallSliding = true; see later for animation
+            rb.linearVelocityY = -wallSlideSpeed;
+        
+        }
+        else
+        {
+            //isWallSliding = false;
+        }
+    }
+
 
     void AnimationManager()
     {
