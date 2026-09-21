@@ -318,14 +318,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   jumpCount: 0
-  wallSlideSpeed: 3
+  wallSlideSpeed: 4
   speed: 8
-  jumpForce: 15
-  gravity: 3
+  jumpForce: 20
+  gravity: 4
   fallMult: 2
   lowJumpMult: 2
-  groundCheck: {fileID: 1609214934}
-  wallCheck: {fileID: 469350432}
 --- !u!95 &247204519
 Animator:
   serializedVersion: 7
