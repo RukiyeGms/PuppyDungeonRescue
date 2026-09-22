@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     Animator playerAnimator;
     Transform playertransform;
+    ParticleSystem particleS;
 
     int maxJump = 2;
     int jumpCount;
@@ -34,11 +35,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lowJumpMult = 2f;
 
 
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
         playertransform = GetComponent<Transform>();
+        particleS = GetComponentInChildren<ParticleSystem>();
       
         isGrounded = false;
         wall = false;
@@ -74,6 +78,8 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    
+
     void Flip()
     {
         if ( !isWallJumping)
@@ -87,15 +93,15 @@ public class PlayerController : MonoBehaviour
 
                 playertransform.rotation = Quaternion.Euler(0, 180, 0);
             }
+
         }
         
     }
 
-    // move
+
 
     private void Move()
     {
-     
 
         if (!isWallJumping) { 
             rb.linearVelocityX = moveInput.x * speed;
@@ -109,7 +115,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocityY = wallJumpSpeed.y;
             rb.linearVelocityX = wallJumpSpeed.x * wallJumpDirection;
             isWallJumping = true;
-            playerAnimator.SetTrigger("jumping");
+            JumpingFX();
             jumpCount = 1;
 
             if (wallJumpDirection < 0)
@@ -126,13 +132,21 @@ public class PlayerController : MonoBehaviour
         else if ( !isWallJumping && (isGrounded || jumpCount < maxJump))
         {
             rb.linearVelocityY = jumpForce;
-            playerAnimator.SetTrigger("jumping");
+            JumpingFX();
             jumpCount++;
 
 
         }
 
     }
+
+    void JumpingFX()
+    {
+        playerAnimator.SetTrigger("jumping");
+        particleS.Play();
+    }
+
+
 
 
     private void AdjustGravity()
