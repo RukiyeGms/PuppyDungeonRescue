@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviour
         this.isGrounded = isGrounded;
         playerAnimator.SetBool("isGrounded", isGrounded);
         if (isGrounded) jumpCount = 0;
+        else { jumpCount = 1; }
 
     }
 
@@ -217,6 +218,8 @@ public class PlayerController : MonoBehaviour
 
     void AnimationManager()
     {
+  
+
         playerAnimator.SetFloat("velocityY", rb.linearVelocityY);
 
         if (moveAction.IsPressed() && isGrounded)

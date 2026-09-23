@@ -1,9 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 
 public class WallCheck : MonoBehaviour
 {
-    
+
     [SerializeField] PlayerController playerController;
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {
