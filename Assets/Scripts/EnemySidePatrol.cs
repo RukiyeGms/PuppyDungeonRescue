@@ -1,7 +1,4 @@
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-
 
 // 2 point patrol checking X 
 public class EnemySidePatrol : MonoBehaviour
@@ -16,12 +13,12 @@ public class EnemySidePatrol : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
 
     
-
-    //Enemy Script you need to make a Patrol() in there //OR here and get t his there
-    //[SerializeField] TeethEnemy teethEnemy;
-
     [SerializeField] float closeEnough = 0.5f;
-    [SerializeField] float patrolSpeed = 4f;
+    [SerializeField] float patrolSpeed = 2f;
+
+    [SerializeField] float comeBackTime = 5f;
+    float comeBackTimer;
+    
 
     bool isPatrolling;
 
@@ -29,6 +26,8 @@ public class EnemySidePatrol : MonoBehaviour
     {
         isPatrolling = true;
         currentPoint = pointB;
+        comeBackTimer = 0;
+        
         Flip();
     }
 
@@ -37,6 +36,8 @@ public class EnemySidePatrol : MonoBehaviour
     void FixedUpdate()
     {
         Patrol();
+        MovePlatformPosition();
+        
     }
 
 
@@ -44,6 +45,8 @@ public class EnemySidePatrol : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (pointA == null || pointB == null) return;
+
         Gizmos.DrawSphere(pointA.transform.position, closeEnough);
         Gizmos.DrawSphere(pointB.transform.position, closeEnough);
         Gizmos.DrawLine(pointA.transform.position , pointB.transform.position); 
@@ -68,7 +71,7 @@ public class EnemySidePatrol : MonoBehaviour
 
     }
 
-    void PatrolContinueAfterAttcak()
+    public void ResumePatrol()
     {
         if (Vector2.Distance(enemyTransform.position, pointA.transform.position) <= Vector2.Distance(enemyTransform.position , pointB.transform.position))
         {
@@ -80,14 +83,20 @@ public class EnemySidePatrol : MonoBehaviour
         }
 
         Flip();
-
+        comeBackTimer = comeBackTime;
         isPatrolling = true;
+    }
+
+     public void StopPatrol()
+    {
+        isPatrolling = false;
+        rb.linearVelocityX = 0f;
     }
 
 
     void CheckPointChange()
     {
-        if (Vector2.Distance(currentPoint.transform.position, enemyTransform.position) < 0.5f)
+        if (Vector2.Distance(currentPoint.transform.position, enemyTransform.position) < closeEnough)
         {
             if (currentPoint == pointA) { currentPoint = pointB; }
             else { currentPoint = pointA; }
@@ -105,6 +114,34 @@ public class EnemySidePatrol : MonoBehaviour
         else if (currentPoint.transform.position.x - enemyTransform.position.x  < 0)
         {
             enemyTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+
+    //ifenemycan't reach old patrol after resuming patrol change patrol position
+    void MovePlatformPosition()
+    {
+        if (comeBackTimer <= 0)
+        {
+            return;
+        }
+        else
+        {
+            
+            if ((Vector2.Distance(enemyTransform.position, pointA.transform.position ) < closeEnough || Vector2.Distance(enemyTransform.position, pointB.transform.position) < closeEnough)) 
+            { 
+                comeBackTimer = 0;
+                return;
+            }
+            else
+            {
+                comeBackTimer -= Time.fixedDeltaTime;
+                if (comeBackTimer <= 0)
+                {
+                    transform.position = enemyTransform.position;
+
+                }
+            }
         }
     }
 }
