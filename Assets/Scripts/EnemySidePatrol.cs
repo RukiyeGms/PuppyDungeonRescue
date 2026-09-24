@@ -17,7 +17,7 @@ public class EnemySidePatrol : MonoBehaviour
     [SerializeField] float patrolSpeed = 2f;
 
     [SerializeField] float comeBackTime = 5f;
-    float comeBackTimer;
+    public float comeBackTimer;
     
 
     public bool isPatrolling;

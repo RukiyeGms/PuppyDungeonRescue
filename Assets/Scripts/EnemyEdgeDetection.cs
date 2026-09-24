@@ -7,7 +7,7 @@ public class EnemyEdgeDetection : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Edge") && enemySidePatrol.isPatrolling)
+        if (other.gameObject.CompareTag("Edge") && enemySidePatrol.isPatrolling && enemySidePatrol.comeBackTimer <=0)
         {
             enemySidePatrol.ChangeDirection();
         }
