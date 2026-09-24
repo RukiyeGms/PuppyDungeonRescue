@@ -20,7 +20,7 @@ public class EnemySidePatrol : MonoBehaviour
     float comeBackTimer;
     
 
-    bool isPatrolling;
+    public bool isPatrolling;
 
     private void Awake()
     {
@@ -98,10 +98,15 @@ public class EnemySidePatrol : MonoBehaviour
     {
         if (Vector2.Distance(currentPoint.transform.position, enemyTransform.position) < closeEnough)
         {
-            if (currentPoint == pointA) { currentPoint = pointB; }
-            else { currentPoint = pointA; }
-            Flip();
+            ChangeDirection();
         }
+    }
+
+    public void ChangeDirection()
+    {
+        if (currentPoint == pointA) { currentPoint = pointB; }
+        else { currentPoint = pointA; }
+        Flip();
     }
 
     void Flip()

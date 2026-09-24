@@ -70,6 +70,7 @@ public class EnemyVision : MonoBehaviour
         }
         else
         {
+            if (enemySeen) { playerPositionKnownTimer = playerPositionKnownTime; }
             playerPositionKnownTimer -= Time.fixedDeltaTime;
             visionTimerON = true; 
         }

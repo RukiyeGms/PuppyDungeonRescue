@@ -12,7 +12,7 @@ public class TeethEnemy : MonoBehaviour
     [SerializeField] EnemySidePatrol enemySidePatrol;
     Rigidbody2D rb;
 
-    [SerializeField] float followSpeed = 4f;
+    [SerializeField] float followSpeed = 6f;
     public float followTime = 1.0f;
     float followTimer;
 
