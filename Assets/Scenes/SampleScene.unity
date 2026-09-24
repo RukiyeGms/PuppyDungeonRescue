@@ -942,7 +942,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749a0fef9010bb845961bf9fa689a5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  gracePeriodTime: 1
   healthUI: {fileID: 1851154797}
+  playerSpriteRenderer: {fileID: 247204514}
 --- !u!1 &332232783
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -7,16 +8,19 @@ public class PlayerHealth : MonoBehaviour
     int maxHealth = 5;
     int currentHealth;
 
-    [SerializeField] float gracePeriodTime = 0.5f;
-    float gracePeriodTimer;
+    [SerializeField] float gracePeriodTime = 1f;
+    bool gracePeriod;
+    float timer;
+    float flickerRate = 0.1f;
 
     [SerializeField] HealthUI healthUI;
+    [SerializeField] SpriteRenderer playerSpriteRenderer;
     
 
     private void Awake()
     {
         currentHealth = maxHealth;
-        gracePeriodTimer = 0;
+        gracePeriod = false;
 
     }
     void Start()
@@ -25,22 +29,18 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
-    private void FixedUpdate()
-    {
-        GracePeriod();
-    }
 
     public void TakeHit(int damage)
     {
-        if (currentHealth > 0 && gracePeriodTimer <= 0)
+        if (currentHealth > 0 && !gracePeriod) 
         {
             currentHealth -= damage;
             healthUI.UpdateHearts(currentHealth);
-            gracePeriodTimer = gracePeriodTime;
+            StartCoroutine(GracePeriod());
 
         }
 
-        if (currentHealth < 0) {/*Die*/}
+        if (currentHealth <= 0) {/*Die*/}
     }
 
     public void GetHealth(int health)
@@ -61,12 +61,18 @@ public class PlayerHealth : MonoBehaviour
         healthUI.UpdateHearts(currentHealth);
     }
 
-    void GracePeriod()
+    IEnumerator GracePeriod()
     {
-        if (gracePeriodTimer > 0)
-        {
-            gracePeriodTimer -= Time.fixedDeltaTime;
+        gracePeriod = true;
+        timer = 0f;
+        while (timer < gracePeriodTime)
+        {   
+            playerSpriteRenderer.enabled = !playerSpriteRenderer.enabled;
+            yield return new WaitForSeconds(flickerRate);
+            timer += flickerRate;
         }
+        gracePeriod = false;
+        playerSpriteRenderer.enabled = true;
 
     }
 }
