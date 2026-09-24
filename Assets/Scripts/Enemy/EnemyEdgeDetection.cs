@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyEdgeDetection : MonoBehaviour
 {
-
+    
     [SerializeField] EnemySidePatrol enemySidePatrol;
 
     void OnTriggerEnter2D(Collider2D other)

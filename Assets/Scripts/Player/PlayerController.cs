@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//PlayerMovement
 public class PlayerController : MonoBehaviour
 {
+
     Vector2 moveInput;
     Rigidbody2D rb;
     
@@ -57,7 +60,6 @@ public class PlayerController : MonoBehaviour
     {
         rb.gravityScale = gravity;
         jumpCount = 0;
-
     }
 
 
@@ -73,12 +75,8 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        moveInput = value.Get<Vector2>();
-
-        
+        moveInput = value.Get<Vector2>();      
     }
-
-    
 
     void Flip()
     {
@@ -97,8 +95,6 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-
-
 
     private void Move()
     {
@@ -214,6 +210,14 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    //Combat
+
+    public void takeDamage(int damageTakenFromHit)
+    {
+        //invoke on take damage
+    }
+
 
 
     void AnimationManager()
