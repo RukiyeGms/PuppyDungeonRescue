@@ -6645,6 +6645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891f69e230eb6da4b8f6397007dfe8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeethEnemy
+  emoteAnim: {fileID: 1155516149}
   enemyVision: {fileID: 1709722290}
   enemySidePatrol: {fileID: 2007757490}
   followSpeed: 6

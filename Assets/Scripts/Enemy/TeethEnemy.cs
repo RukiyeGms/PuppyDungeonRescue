@@ -4,6 +4,7 @@ public class TeethEnemy : MonoBehaviour
 {
     Vector2 playerPosition;
     Animator anim;
+    [SerializeField] Animator emoteAnim;
     bool isTailing;
     bool isAttacking;
 
@@ -59,6 +60,7 @@ public class TeethEnemy : MonoBehaviour
             isTailing = true;
             followTimer = followTime;
             enemySidePatrol.StopPatrol();
+            emoteAnim.SetTrigger("alerted");
 
             anim.speed = 2;
         }
@@ -122,7 +124,7 @@ public class TeethEnemy : MonoBehaviour
             followTimer = followTime;
         }
         else
-        {
+        { 
             if (followTimer > 0f)
             {
                 followTimer -= Time.fixedDeltaTime;
@@ -154,6 +156,7 @@ public class TeethEnemy : MonoBehaviour
         {
             anim.SetBool("ismoving" , true);
         }
+
     }
 
     //bool knockBack;
