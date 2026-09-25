@@ -7352,6 +7352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfc07dd5bb880c4984ce1d9e79b5763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTouchDamage
+  teethEnemy: {fileID: 730780077}
   playerController: {fileID: 247204518}
   playerHealth: {fileID: 247204521}
   onTouchDamage: 1
@@ -7403,9 +7404,10 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -0.7135886, y: 1.1877121}
       - {x: -1.5816243, y: 1.3524683}
-      - {x: -2.3882499, y: 0.86962306}
-      - {x: -3.6557562, y: -0.63981605}
-      - {x: -3.9820058, y: -1.6142521}
+      - {x: -2.729578, y: 0.7672251}
+      - {x: -3.8511047, y: -0.1917007}
+      - {x: -4.4920077, y: -0.5203516}
+      - {x: -4.664662, y: -1.6825193}
       - {x: -0.16648342, y: -1.6754091}
       - {x: -0.14976999, y: 0.46191022}
   m_UseDelaunayMesh: 1

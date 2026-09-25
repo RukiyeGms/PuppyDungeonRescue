@@ -1,10 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyTouchDamage : MonoBehaviour
 {
+    [SerializeField] TeethEnemy teethEnemy;
     [SerializeField] PlayerController playerController;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] int onTouchDamage = 1;
+
+    float turnToPlayerTime = 0.1f;
 
     private void Awake()
     {
@@ -13,17 +17,19 @@ public class EnemyTouchDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") 
-        { 
+        if (collision.gameObject.tag == "Player")
+        {
             //player controlle knockedback
             playerHealth.TakeHit(onTouchDamage);
             StartCoroutine(playerController.GetKnockedBack(PlayerOnRight(collision.gameObject.transform)));
-            
+            StartCoroutine(WaitOneFrameToTail());
+
+
         }
     }
     bool PlayerOnRight(Transform playerTransform)
     {
-        if (transform.position.x >= playerTransform.position.x) 
+        if (transform.position.x >= playerTransform.position.x)
         {
             return false;
         }
@@ -31,5 +37,11 @@ public class EnemyTouchDamage : MonoBehaviour
         {
             return true;
         }
+    }
+
+    IEnumerator WaitOneFrameToTail(){
+
+        yield return new WaitForSeconds(turnToPlayerTime);
+        teethEnemy.StartTail();
     }
 }
