@@ -251,6 +251,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("ouch", knockBack);
 
         if (!knockBack) { playerAnimator.SetFloat("velocityY", rb.linearVelocityY); }
+        else { playerAnimator.SetFloat("velocityY", 0); }
 
         if (moveAction.IsPressed() && isGrounded)
         {
