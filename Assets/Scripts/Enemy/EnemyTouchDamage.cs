@@ -17,6 +17,19 @@ public class EnemyTouchDamage : MonoBehaviour
         { 
             //player controlle knockedback
             playerHealth.TakeHit(onTouchDamage);
+            StartCoroutine(playerController.GetKnockedBack(PlayerOnRight(collision.gameObject.transform)));
+            
+        }
+    }
+    bool PlayerOnRight(Transform playerTransform)
+    {
+        if (transform.position.x >= playerTransform.position.x) 
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

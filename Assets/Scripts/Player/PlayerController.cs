@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     bool wall;
 
+    //walljump
     bool isWallSliding;
     bool isWallJumping;
     float wallJumpDirection;
@@ -31,11 +33,17 @@ public class PlayerController : MonoBehaviour
     
 
 
-    [SerializeField] float speed = 8f;
+    [SerializeField] float speed = 10f;
     [SerializeField] float jumpForce = 20f;
     [SerializeField] float gravity = 4f;
     [SerializeField] float fallMult = 2f;
     [SerializeField] float lowJumpMult = 2f;
+
+    //knockback
+    [SerializeField] float knockBackForceX = 15f;
+    [SerializeField] float knockBackForceY = 15f;
+    [SerializeField] float knockBackTime = 0.5f;
+    bool knockBack;
 
 
 
@@ -51,6 +59,7 @@ public class PlayerController : MonoBehaviour
         wall = false;
         isWallSliding = false;
         isWallJumping = false;
+        knockBack = false;
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
         moveAction = GetComponent<PlayerInput>().actions["Move"];
 
@@ -67,10 +76,12 @@ public class PlayerController : MonoBehaviour
     {
         AnimationManager();
         AdjustGravity();
-        WallSlide();
-        Move();
-        Flip();
-
+        if (!knockBack)
+        {
+            WallSlide();
+            Move();
+            Flip();
+        }
     }
 
     void OnMove(InputValue value)
@@ -106,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if  (isWallSliding && wallJumpTimer > 0f)
+        if  (isWallSliding && wallJumpTimer > 0f && !knockBack)
         {
             rb.linearVelocityY = wallJumpSpeed.y;
             rb.linearVelocityX = wallJumpSpeed.x * wallJumpDirection;
@@ -125,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
             
         }
-        else if ( !isWallJumping && (isGrounded || jumpCount < maxJump))
+        else if ( !isWallJumping && (isGrounded || jumpCount < maxJump) && !knockBack)
         {
             rb.linearVelocityY = jumpForce;
             JumpingFX();
@@ -156,7 +167,7 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = gravity * fallMult;
            
         }
-        else if (rb.linearVelocityY > 0f)
+        else if (rb.linearVelocityY > 0f  && !knockBack)
         {
             if (!jumpAction.IsPressed()) { rb.gravityScale = gravity * lowJumpMult; }
             else { rb.gravityScale = gravity; }
@@ -213,18 +224,33 @@ public class PlayerController : MonoBehaviour
 
     //Combat
 
-    public void takeDamage(int damageTakenFromHit)
+    public IEnumerator GetKnockedBack(bool playerOnRight)
     {
-        //invoke on take damage
+        knockBack = true;
+        rb.linearVelocityY = knockBackForceY;
+        if (playerOnRight) 
+        {
+            rb.linearVelocityX = knockBackForceX;
+            playertransform.rotation = Quaternion.Euler(0, 180 ,0);
+        }
+        else 
+        { 
+            rb.linearVelocityX = -knockBackForceX;
+            playertransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        yield return new WaitForSeconds(knockBackTime);
+        knockBack = false;
+        
     }
 
 
 
     void AnimationManager()
     {
-  
 
-        playerAnimator.SetFloat("velocityY", rb.linearVelocityY);
+        playerAnimator.SetBool("ouch", knockBack);
+
+        if (!knockBack) { playerAnimator.SetFloat("velocityY", rb.linearVelocityY); }
 
         if (moveAction.IsPressed() && isGrounded)
         {

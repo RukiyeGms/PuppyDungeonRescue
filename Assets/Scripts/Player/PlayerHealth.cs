@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     int currentHealth;
 
     [SerializeField] float gracePeriodTime = 1.5f;
-    bool gracePeriod;
+    public bool gracePeriod;
     float timer;
     float flickerRate = 0.1f;
 

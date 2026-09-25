@@ -155,4 +155,24 @@ public class TeethEnemy : MonoBehaviour
             anim.SetBool("ismoving" , true);
         }
     }
+
+    //bool knockBack;
+    //public IEnumerator EnemyKnockedBack(bool enemyOnRight,int knockBackForceX , int knockBackForceY ,float  knockBackTime)
+    //{
+    //    knockBack = true;
+    //    rb.linearVelocityY = knockBackForceY;
+    //    if (enemyOnRight)
+    //    {
+    //        rb.linearVelocityX = knockBackForceX;
+    //        transform.rotation = Quaternion.Euler(0, 180, 0);
+    //    }
+    //    else
+    //    {
+    //        rb.linearVelocityX = -knockBackForceX;
+    //        transform.rotation = Quaternion.Euler(0, 0, 0);
+    //    }
+    //    yield return new WaitForSeconds(knockBackTime);
+    //    knockBack = false;
+
+    //}
 }
