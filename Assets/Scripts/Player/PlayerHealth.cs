@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] HealthUI healthUI;
     [SerializeField] SpriteRenderer playerSpriteRenderer;
+
+    //!For player controller to subscribe
+    public static event Action OnPuppyDied;
     
 
     private void Awake()
@@ -40,7 +44,11 @@ public class PlayerHealth : MonoBehaviour
 
         }
 
-        if (currentHealth <= 0) {/*Die*/}
+        if (currentHealth <= 0) 
+        {
+            /*Die*/
+            OnPuppyDied.Invoke();
+        }
     }
 
     public void GetHealth(int health)

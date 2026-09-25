@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     
 
 
-    [SerializeField] float speed = 10f;
+    [SerializeField] float speed = 8f;
     [SerializeField] float jumpForce = 20f;
     [SerializeField] float gravity = 4f;
     [SerializeField] float fallMult = 2f;
@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float knockBackForceY = 15f;
     [SerializeField] float knockBackTime = 0.5f;
     bool knockBack;
+
+    bool dead;
 
 
 
@@ -63,6 +65,11 @@ public class PlayerController : MonoBehaviour
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
         moveAction = GetComponent<PlayerInput>().actions["Move"];
 
+        //handle death
+        dead = false;
+        PlayerHealth.OnPuppyDied += Death;
+
+
     }
 
     void Start()
@@ -76,7 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         AnimationManager();
         AdjustGravity();
-        if (!knockBack)
+        if (!knockBack && !dead)
         {
             WallSlide();
             Move();
@@ -243,11 +250,16 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    void Death()
+    {
+        dead = true;
+    }
+
 
 
     void AnimationManager()
     {
-
+        //death animation
         playerAnimator.SetBool("ouch", knockBack);
 
         if (!knockBack) { playerAnimator.SetFloat("velocityY", rb.linearVelocityY); }
@@ -259,6 +271,11 @@ public class PlayerController : MonoBehaviour
         }
         else { playerAnimator.SetBool("MoveAction", false); }
 
+    }
+
+    void OnDestroy()
+    {
+        PlayerHealth.OnPuppyDied -= Death;
     }
 
 }

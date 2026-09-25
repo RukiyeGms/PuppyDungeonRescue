@@ -55,15 +55,12 @@ public class TeethEnemy : MonoBehaviour
 
     public void StartTail()
     {
-        if (enemyVision.enemySeen)
-        {
-            isTailing = true;
-            followTimer = followTime;
-            enemySidePatrol.StopPatrol();
-            emoteAnim.SetTrigger("alerted");
+        isTailing = true;
+        followTimer = followTime;
+        enemySidePatrol.StopPatrol();
+        emoteAnim.SetTrigger("alerted");
 
-            anim.speed = 2;
-        }
+        anim.speed = 2;
     }
 
     void StopTailing() 
