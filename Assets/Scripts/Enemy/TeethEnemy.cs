@@ -23,13 +23,7 @@ public class TeethEnemy : MonoBehaviour
     public float followTime = 1.0f;
     float followTimer;
 
-
     bool dead;
-
-    /// <summary>
-    ///enemy touch enemy vision enemy emote enemy edge detector
-    /// </summary>
-
 
     void Awake()
     {
@@ -49,13 +43,8 @@ public class TeethEnemy : MonoBehaviour
         {
             AnimationManager();
             FollowPlayer();
-        }
-        
-        
-        
+        }        
     }
-
-    
 
     public void StartTail()
     {

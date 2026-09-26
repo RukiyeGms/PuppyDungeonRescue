@@ -5,6 +5,7 @@ public class EnemyHealth : MonoBehaviour
 {
     Animator teethAnim;
     TeethEnemy teethEnemy;
+    SpriteRenderer spriteRenderer;
 
     int enemyMaxHealth = 3;
     int enemyHealth;
@@ -16,6 +17,7 @@ public class EnemyHealth : MonoBehaviour
         teethAnim = GetComponent<Animator>();
         teethEnemy = GetComponent<TeethEnemy>();
         enemyHealth = enemyMaxHealth;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void TakeHit(int damage)
@@ -30,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
             }
             else
             {
-                //play damaged anim
+                StartCoroutine(FlashRed());
             }
 
 
@@ -62,6 +64,19 @@ public class EnemyHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+    }
+
+    IEnumerator FlashRed()
+    {
+        var tempcolor = spriteRenderer.color;
+        tempcolor.b = 0;
+        tempcolor.g = 0;
+        spriteRenderer.color = tempcolor;
+        yield return new WaitForSeconds(0.2f);
+        tempcolor.b = 1;
+        tempcolor.g = 1;
+        spriteRenderer.color = tempcolor;
+        
     }
 
 }
