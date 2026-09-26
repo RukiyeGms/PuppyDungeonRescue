@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     bool knockBack;
 
     bool dead;
+    public bool isAttacking;
 
 
 
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         AnimationManager();
         AdjustGravity();
-        if (!knockBack && !dead)
+        if (!knockBack && !dead && !isAttacking)
         {
             WallSlide();
             Move();

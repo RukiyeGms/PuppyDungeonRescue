@@ -4185,6 +4185,10 @@ PrefabInstance:
       propertyPath: healthUI
       value: 
       objectReference: {fileID: 1851154797}
+    - target: {fileID: 2898741635096030086, guid: 260702a9f76c9454d9f764e9c085518b, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500282968350350676, guid: 260702a9f76c9454d9f764e9c085518b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.57
