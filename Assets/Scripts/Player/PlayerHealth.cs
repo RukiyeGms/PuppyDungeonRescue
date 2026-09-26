@@ -7,9 +7,9 @@ public class PlayerHealth : MonoBehaviour
     //puppy health
     int maxHealthCap = 10;
     int maxHealth = 5;
-    int currentHealth;
+    public int currentHealth;
 
-    [SerializeField] float gracePeriodTime = 1.5f;
+    [SerializeField] float gracePeriodTime = 1f;
     public bool gracePeriod;
     float timer;
     float flickerRate = 0.1f;
@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] HealthUI healthUI;
     [SerializeField] SpriteRenderer playerSpriteRenderer;
 
-    //!For player controller to subscribe
+    //!For player playerController to subscribe
     public static event Action OnPuppyDied;
     
 

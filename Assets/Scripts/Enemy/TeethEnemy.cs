@@ -6,10 +6,16 @@ public class TeethEnemy : MonoBehaviour
     Animator anim;
     [SerializeField] Animator emoteAnim;
     bool isTailing;
-    bool isAttacking;
 
-
+    
     [SerializeField] EnemyVision enemyVision;
+
+    //disable on dead
+    [SerializeField] GameObject enemyVisionObject;
+    [SerializeField] GameObject enemyTouchOBject;
+    [SerializeField] GameObject enemyEmoteObject;
+    [SerializeField] GameObject enemyEdgeDetectObject;
+
     [SerializeField] EnemySidePatrol enemySidePatrol;
     Rigidbody2D rb;
 
@@ -17,17 +23,12 @@ public class TeethEnemy : MonoBehaviour
     public float followTime = 1.0f;
     float followTimer;
 
-    float readyAttackTimer;
-    [SerializeField] float readyAttackTime = 0.5f;
 
-    float attackCoolTimeTimer;
-    [SerializeField] float attackCoolTime = 0.5f;
+    bool dead;
 
-    float attackedTimer;
-    [SerializeField] float attackedTime;
-
-    [SerializeField] float attackRange = 2.0f;
-
+    /// <summary>
+    ///enemy touch enemy vision enemy emote enemy edge detector
+    /// </summary>
 
 
     void Awake()
@@ -35,18 +36,21 @@ public class TeethEnemy : MonoBehaviour
         anim = GetComponent<Animator>();
         rb= GetComponent<Rigidbody2D>();
         isTailing = false;
-        isAttacking = false;
         followTimer = 0.0f;
-        readyAttackTimer = 0.0f;
-        attackCoolTimeTimer = 0.0f;
-        attackedTimer = 0.0f;
+        dead = false;
+        
+        
     }
 
 
     void FixedUpdate()
     {
-        AnimationManager();
-        FollowPlayer();
+        if (!dead)
+        {
+            AnimationManager();
+            FollowPlayer();
+        }
+        
         
         
     }
@@ -99,10 +103,7 @@ public class TeethEnemy : MonoBehaviour
                 rb.linearVelocityX = - followSpeed;
             }
 
-            if (attackedTimer <= 0.0f)
-            {
-                Flip();
-            }
+            Flip();
 
         }
         
@@ -132,6 +133,17 @@ public class TeethEnemy : MonoBehaviour
             }
 
         }
+    }
+
+    public void OnDeath()
+    {
+        dead = true;
+        enemySidePatrol.Dead();
+        rb.linearVelocityX = 0;
+        Destroy(enemyEdgeDetectObject);
+        Destroy(enemyEmoteObject);
+        Destroy(enemyTouchOBject);
+        Destroy(enemyVisionObject);
     }
 
     void Flip()

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     InputAction jumpAction;
     InputAction moveAction;
     Animator playerAnimator;
-    Transform playertransform;
+    public Transform playertransform;
     ParticleSystem particleS;
 
     int maxJump = 2;

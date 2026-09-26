@@ -9,13 +9,18 @@ public class GameController : MonoBehaviour
     //forgameover
     [SerializeField] GameObject puppyDownScreen;
     [SerializeField] FadeToBlack fadeToBlack;
-
-    public static event Action OnDungeonRestart;
-
+    [SerializeField]Transform dungeonSpawnLocation;
+    [SerializeField] GameObject puppy;
     void Start()
     {
+        puppy.transform.position = dungeonSpawnLocation.position;
         PlayerHealth.OnPuppyDied += GameOver;
         puppyDownScreen.SetActive(false);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(dungeonSpawnLocation.position, 0.5f );
     }
 
     void GameOver()

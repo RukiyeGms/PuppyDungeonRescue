@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878addeedaba0c74c9ebdea5d0071bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeandTrapTouchDamage
-  controller: {fileID: 0}
-  playerHealth: {fileID: 0}
+  respawnTransform: {fileID: 7645747146215417866, guid: dc66c5fee0949dc469008bf67513d1e5, type: 3}
+  playerController: {fileID: 7071036583419573096, guid: 260702a9f76c9454d9f764e9c085518b, type: 3}
+  playerHealth: {fileID: 99947676478747772, guid: 260702a9f76c9454d9f764e9c085518b, type: 3}
   onTouchDamage: 1
+  fadeToBlack: {fileID: 3184570737570420276, guid: 4ca032a4de13a1c4e9594890fd3fc8d3, type: 3}

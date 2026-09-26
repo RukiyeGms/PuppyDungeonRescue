@@ -12,6 +12,8 @@ public class EnemySidePatrol : MonoBehaviour
     [SerializeField] Transform enemyTransform;
     [SerializeField] Rigidbody2D rb;
 
+    bool dead;
+
     
     [SerializeField] float closeEnough = 0.5f;
     [SerializeField] float patrolSpeed = 2f;
@@ -27,6 +29,7 @@ public class EnemySidePatrol : MonoBehaviour
         isPatrolling = true;
         currentPoint = pointB;
         comeBackTimer = 0;
+        dead = false;
         
         Flip();
     }
@@ -35,8 +38,12 @@ public class EnemySidePatrol : MonoBehaviour
 
     void FixedUpdate()
     {
-        Patrol();
-        MovePlatformPosition();
+        if (!dead)
+        {
+            Patrol();
+            MovePlatformPosition();
+        }
+        
         
     }
 
@@ -148,5 +155,10 @@ public class EnemySidePatrol : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Dead()
+    {
+        Destroy(gameObject);
     }
 }
