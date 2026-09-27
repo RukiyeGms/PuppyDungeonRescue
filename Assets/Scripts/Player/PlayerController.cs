@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -231,6 +232,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //Combat
+
+    public void KnockBackRoutine(bool playerOnRight)
+    {
+        StartCoroutine(GetKnockedBack(playerOnRight));
+    }
 
     public IEnumerator GetKnockedBack(bool playerOnRight)
     {

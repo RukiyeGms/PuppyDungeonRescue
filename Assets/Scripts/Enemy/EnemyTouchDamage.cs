@@ -21,7 +21,7 @@ public class EnemyTouchDamage : MonoBehaviour
         {
             //player controlle knockedback
             playerHealth.TakeHit(onTouchDamage);
-            StartCoroutine(playerController.GetKnockedBack(PlayerOnRight(collision.gameObject.transform)));
+            playerController.KnockBackRoutine((PlayerOnRight(collision.gameObject.transform)));
             StartCoroutine(WaitOneFrameToTail());
 
 

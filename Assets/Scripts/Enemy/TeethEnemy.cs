@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TeethEnemy : MonoBehaviour
@@ -6,8 +7,9 @@ public class TeethEnemy : MonoBehaviour
     Animator anim;
     [SerializeField] Animator emoteAnim;
     bool isTailing;
+    bool knockBack;
 
-    
+
     [SerializeField] EnemyVision enemyVision;
 
     //disable on dead
@@ -32,6 +34,7 @@ public class TeethEnemy : MonoBehaviour
         isTailing = false;
         followTimer = 0.0f;
         dead = false;
+        knockBack = false;
         
         
     }
@@ -39,7 +42,7 @@ public class TeethEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!dead)
+        if (!dead && !knockBack)
         {
             AnimationManager();
             FollowPlayer();
@@ -157,23 +160,24 @@ public class TeethEnemy : MonoBehaviour
 
     }
 
-    //bool knockBack;
-    //public IEnumerator EnemyKnockedBack(bool enemyOnRight,int knockBackForceX , int knockBackForceY ,float  knockBackTime)
-    //{
-    //    knockBack = true;
-    //    rb.linearVelocityY = knockBackForceY;
-    //    if (enemyOnRight)
-    //    {
-    //        rb.linearVelocityX = knockBackForceX;
-    //        transform.rotation = Quaternion.Euler(0, 180, 0);
-    //    }
-    //    else
-    //    {
-    //        rb.linearVelocityX = -knockBackForceX;
-    //        transform.rotation = Quaternion.Euler(0, 0, 0);
-    //    }
-    //    yield return new WaitForSeconds(knockBackTime);
-    //    knockBack = false;
+    public IEnumerator EnemyKnockedBack(bool playerOnRight, float knockBackForceX , int currenthealth)
+    {
+        enemySidePatrol.StopPatrol();
+        knockBack = true;
+        if (playerOnRight)
+        {
+            rb.linearVelocityX = -knockBackForceX;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            rb.linearVelocityX = knockBackForceX;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        yield return new WaitForSeconds(0.5f);
+        knockBack = false;
+        if (currenthealth > 0) { StartTail(); }
+        
 
-    //}
+    }
 }

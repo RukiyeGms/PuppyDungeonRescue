@@ -9,9 +9,13 @@ public class PlayerAttack : MonoBehaviour
     Coroutine attackRoutine;
     EnemyHealth enemyHealth;
     PlayerController playerController;
-    Transform playerTransform;
+    [SerializeField] Transform playerTransform;
     Rigidbody2D rb;
     [SerializeField] float attackDashSpeed = 4;
+
+    Transform enemyTransform;
+
+    float knockbackForceX = 10;
 
     CircleCollider2D circleCollider2D;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
         enemyHealth = null;
         playerController = GetComponentInParent<PlayerController>();
         rb = GetComponentInParent<Rigidbody2D>();
-        playerTransform = GetComponentInParent<Transform>();
+        enemyTransform = null;
         
     }
 
@@ -38,7 +42,8 @@ public class PlayerAttack : MonoBehaviour
         {
             //now enemyhealth
             enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
-            enemyHealth.TakeHit(attackPower);
+            enemyTransform = enemyHealth.transform;
+            enemyHealth.TakeHit(attackPower , PlayeronRight(playerTransform , enemyTransform) , knockbackForceX);
         }
     }
 
@@ -66,7 +71,10 @@ public class PlayerAttack : MonoBehaviour
         circleCollider2D.enabled = false;
         anim.SetBool("isAttacking", false);
         playerController.isAttacking = false;
-        rb.linearVelocityX = 10;
+        rb.linearVelocityX =0;
+
+        //wait for attacking again
+        yield return new WaitForSeconds(0.2f);
         attackRoutine = null;
     }
 
@@ -74,6 +82,15 @@ public class PlayerAttack : MonoBehaviour
     {
 
         if (playerTransform.rotation.y == 0)
+        {
+            return true;
+        }
+        else { return false; }
+    }
+
+    bool PlayeronRight(Transform player , Transform enemy)
+    {
+        if (player.position.x > enemy.position.x)
         {
             return true;
         }
