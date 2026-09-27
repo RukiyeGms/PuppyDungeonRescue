@@ -174,7 +174,7 @@ public class TeethEnemy : MonoBehaviour
             rb.linearVelocityX = knockBackForceX;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         knockBack = false;
         if (currenthealth > 0) { StartTail(); }
         

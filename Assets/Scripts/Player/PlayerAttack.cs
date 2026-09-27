@@ -12,10 +12,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] Transform playerTransform;
     Rigidbody2D rb;
     [SerializeField] float attackDashSpeed = 4;
+    [SerializeField] float attackForceBackSpeed = 2;
 
     Transform enemyTransform;
 
-    float knockbackForceX = 10;
+    [SerializeField] float knockbackForceX = 8;
 
     CircleCollider2D circleCollider2D;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -44,6 +45,7 @@ public class PlayerAttack : MonoBehaviour
             enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
             enemyTransform = enemyHealth.transform;
             enemyHealth.TakeHit(attackPower , PlayeronRight(playerTransform , enemyTransform) , knockbackForceX);
+            StartCoroutine(AttackLandedPushBack());
         }
     }
 
@@ -54,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
 
     void OnAttack(InputValue value)
     {
-        if (attackRoutine != null) { return; }
+        if (attackRoutine != null || playerController.knockBack) { return; }
         attackRoutine = StartCoroutine(AttackRoutine());
 
     }
@@ -96,4 +98,15 @@ public class PlayerAttack : MonoBehaviour
         }
         else { return false; }
     }
+
+    IEnumerator AttackLandedPushBack()
+    {
+        if (FacingRight()) { rb.linearVelocityX = -attackForceBackSpeed; }
+        else { rb.linearVelocityX = attackForceBackSpeed; }
+
+        yield return new WaitForSeconds(0.1f);
+
+        rb.linearVelocityX = 0;
+    }
 }
+

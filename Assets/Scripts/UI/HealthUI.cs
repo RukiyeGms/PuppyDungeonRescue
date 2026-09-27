@@ -8,10 +8,16 @@ public class HealthUI : MonoBehaviour
     [SerializeField] Sprite fullHeart;
     [SerializeField] Sprite emptyHeart;
 
+    [SerializeField] Image portrait;
+    [SerializeField] Sprite healthyPortrait;
+    [SerializeField] Sprite woundedPortrait;
+
     List<Image> hearts = new List<Image>();
 
     public void SetMaxHearts(int maxHearts)
     {
+        portrait.sprite = healthyPortrait;
+
         foreach (Image heart in hearts)
         {
             Destroy(heart.gameObject);
@@ -21,7 +27,7 @@ public class HealthUI : MonoBehaviour
 
         for (int i = 0; i < maxHearts; i++)
         {
-            //transform sets the parent of this heartprefab as heart container
+            //!!!!!!!transform sets the parent of this heartprefab as heart container
             Image newHeart = Instantiate(heathPrefab, transform);
             newHeart.sprite = fullHeart;
             hearts.Add(newHeart);
@@ -30,20 +36,23 @@ public class HealthUI : MonoBehaviour
 
     public void UpdateHearts(int currenthealth)
     {
-        for (int i = 0; i < hearts.Count; i++) 
-        {
+        if (currenthealth <= 1) { portrait.sprite = woundedPortrait; }
+        else { portrait.sprite = healthyPortrait; }
 
-            if (hearts[i] != null) 
-            { 
-                if (i < currenthealth)
+            for (int i = 0; i < hearts.Count; i++)
+            {
+
+                if (hearts[i] != null)
                 {
-                    hearts[i].sprite = fullHeart;
-                }
-                else
-                {
-                    hearts[i].sprite  = emptyHeart;
+                    if (i < currenthealth)
+                    {
+                        hearts[i].sprite = fullHeart;
+                    }
+                    else
+                    {
+                        hearts[i].sprite = emptyHeart;
+                    }
                 }
             }
-        }
     }
 }

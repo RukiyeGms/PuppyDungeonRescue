@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float knockBackForceX = 15f;
     [SerializeField] float knockBackForceY = 15f;
     [SerializeField] float knockBackTime = 0.5f;
-    bool knockBack;
+    public bool knockBack;
 
     bool dead;
     public bool isAttacking;
