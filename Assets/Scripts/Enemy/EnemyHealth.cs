@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour
         if (!dead && enemyHealth > 0)
         {
             enemyHealth -= damage;
+            teethAnim.SetTrigger("hurt");
             StartCoroutine(teethEnemy.EnemyKnockedBack(playerOnRight, knockBackForce , enemyHealth));
 
             if (enemyHealth <= 0) 

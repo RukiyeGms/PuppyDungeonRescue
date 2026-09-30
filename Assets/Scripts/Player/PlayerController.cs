@@ -204,7 +204,8 @@ public class PlayerController : MonoBehaviour
     {
         if (wall && !isGrounded && moveAction.IsPressed() && !isWallJumping) 
         {
-            isWallSliding = true; //see later for animation
+            isWallSliding = true;
+
             rb.linearVelocityY = -wallSlideSpeed;
 
             //for walljump
@@ -227,7 +228,6 @@ public class PlayerController : MonoBehaviour
             }
 
             isWallSliding = false;
-
         }
     }
 
@@ -268,6 +268,7 @@ public class PlayerController : MonoBehaviour
     {
         //death animation
         playerAnimator.SetBool("ouch", knockBack);
+        
 
         if (!knockBack) { playerAnimator.SetFloat("velocityY", rb.linearVelocityY); }
         else { playerAnimator.SetFloat("velocityY", 0); }
