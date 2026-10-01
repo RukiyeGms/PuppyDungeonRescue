@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float attackDashSpeed = 4;
     [SerializeField] float attackForceBackSpeed = 2;
 
+    CinemachineImpulseSource impulseSource;
+
     Transform enemyTransform;
 
     [SerializeField] float knockbackForceX = 8;
@@ -28,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         rb = GetComponentInParent<Rigidbody2D>();
         enemyTransform = null;
+        impulseSource = GetComponentInParent<CinemachineImpulseSource>();
         
     }
 
@@ -46,6 +50,8 @@ public class PlayerAttack : MonoBehaviour
             enemyTransform = enemyHealth.transform;
             enemyHealth.TakeHit(attackPower , PlayeronRight(playerTransform , enemyTransform) , knockbackForceX);
             StartCoroutine(AttackLandedPushBack());
+
+            CameraShakeManager.instance.CameraShake(impulseSource);
         }
     }
 

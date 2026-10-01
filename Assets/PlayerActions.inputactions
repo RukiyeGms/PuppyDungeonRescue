@@ -35,6 +35,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Interract",
+                    "type": "Button",
+                    "id": "37b4203f-179f-4cb6-83b5-6d3e32a3831f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -51,30 +61,8 @@
                 },
                 {
                     "name": "left",
-                    "id": "77488c94-e7e5-4318-b9d8-98943096a9bb",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
                     "id": "f8e51aa0-caed-49f0-b694-e986185db050",
                     "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "4cbca74d-5a4c-4ca6-9bf5-28eb4df6af4c",
-                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -106,17 +94,6 @@
                 },
                 {
                     "name": "",
-                    "id": "21577a28-6624-411b-960d-63c9ed994c57",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "573fefa1-f9ed-402d-84cf-bde6138d8600",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -128,12 +105,12 @@
                 },
                 {
                     "name": "",
-                    "id": "a6e0eb52-6705-4927-8ab7-963cfa1b4489",
-                    "path": "<Mouse>/leftButton",
+                    "id": "bc14bf01-c0ce-499a-81eb-43a8c1a6b7dc",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Interract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

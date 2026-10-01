@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SpikeandTrapTouchDamage : MonoBehaviour
 {
-    [SerializeField] Transform respawnTransform;
     [SerializeField] PlayerController playerController;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] int onTouchDamage = 1;
@@ -43,7 +42,7 @@ public class SpikeandTrapTouchDamage : MonoBehaviour
         StartCoroutine(playerController.GetKnockedBack(PlayerOnRight(transform)));
         if (playerHealth.currentHealth <= 0 || whenHitGrace) { yield break; }
         yield return StartCoroutine(fadeToBlack.FadetoBlack());
-        playerController.playertransform.position = respawnTransform.position;
+        playerController.playertransform.position = playerController.respawnTransform.position;
         StartCoroutine(fadeToBlack.FadeBackfromBlack());
     }
 
@@ -58,5 +57,6 @@ public class SpikeandTrapTouchDamage : MonoBehaviour
             return true;
         }
     }
+
 
 }

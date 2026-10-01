@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     bool dead;
     public bool isAttacking;
 
+    IInterractable currentInterractable;
+
+    //resopawn
+    public Transform respawnTransform;
 
 
 
@@ -70,6 +74,8 @@ public class PlayerController : MonoBehaviour
         //handle death
         dead = false;
         PlayerHealth.OnPuppyDied += Death;
+
+        currentInterractable = null;
 
 
     }
@@ -279,6 +285,19 @@ public class PlayerController : MonoBehaviour
         }
         else { playerAnimator.SetBool("MoveAction", false); }
 
+    }
+
+    public void ChangeInterractable(IInterractable interactable)
+    {
+        currentInterractable = interactable;
+    }
+
+    public void InterractableNull() { currentInterractable = null; }
+
+    void OnInterract()
+    {
+        if (currentInterractable != null) { currentInterractable.Interract(); }
+        
     }
 
     void OnDestroy()

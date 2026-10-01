@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+
+    
+
     //puppy health
     int maxHealthCap = 10;
     int maxHealth = 5;
@@ -19,12 +23,15 @@ public class PlayerHealth : MonoBehaviour
 
     //!For player playerController to subscribe
     public static event Action OnPuppyDied;
+
+    CinemachineImpulseSource impulseSource;
     
 
     private void Awake()
     {
         currentHealth = maxHealth;
         gracePeriod = false;
+        impulseSource = GetComponent<CinemachineImpulseSource>();
 
     }
     void Start()
@@ -41,6 +48,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth -= damage;
             healthUI.UpdateHearts(currentHealth);
             StartCoroutine(GracePeriod());
+            CameraShakeManager.instance.CameraShake(impulseSource);
 
         }
 
