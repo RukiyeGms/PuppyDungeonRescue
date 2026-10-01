@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -54,6 +53,8 @@ public class PlayerController : MonoBehaviour
     //resopawn
     public Transform respawnTransform;
 
+    bool stopMove;
+
 
 
     private void Awake()
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
         isWallSliding = false;
         isWallJumping = false;
         knockBack = false;
+        stopMove = false;
         jumpAction = GetComponent<PlayerInput>().actions["Jump"];
         moveAction = GetComponent<PlayerInput>().actions["Move"];
 
@@ -91,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         AnimationManager();
         AdjustGravity();
-        if (!knockBack && !dead && !isAttacking)
+        if (!knockBack && !dead && !isAttacking && !stopMove)
         {
             WallSlide();
             Move();
@@ -125,40 +127,44 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
 
-        if (!isWallJumping) { 
+        if (!isWallJumping && !stopMove) { 
             rb.linearVelocityX = moveInput.x * speed;
         }
     }
 
     void OnJump(InputValue value)
     {
-        if  (isWallSliding && wallJumpTimer > 0f && !knockBack)
+        if (!stopMove) 
         {
-            rb.linearVelocityY = wallJumpSpeed.y;
-            rb.linearVelocityX = wallJumpSpeed.x * wallJumpDirection;
-            isWallJumping = true;
-            JumpingFX();
-            jumpCount = 1;
-
-            if (wallJumpDirection < 0)
+            if (isWallSliding && wallJumpTimer > 0f && !knockBack)
             {
-                playertransform.rotation = Quaternion.Euler(0, 180, 0);
+                rb.linearVelocityY = wallJumpSpeed.y;
+                rb.linearVelocityX = wallJumpSpeed.x * wallJumpDirection;
+                isWallJumping = true;
+                JumpingFX();
+                jumpCount = 1;
+
+                if (wallJumpDirection < 0)
+                {
+                    playertransform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else if (wallJumpDirection > 0)
+                {
+                    playertransform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+
+
             }
-            else if (wallJumpDirection > 0)
+            else if (!isWallJumping && (isGrounded || jumpCount < maxJump) && !knockBack)
             {
-                playertransform.rotation = Quaternion.Euler(0, 0, 0);
+                rb.linearVelocityY = jumpForce;
+                JumpingFX();
+                jumpCount++;
+
+
             }
-
-            
         }
-        else if ( !isWallJumping && (isGrounded || jumpCount < maxJump) && !knockBack)
-        {
-            rb.linearVelocityY = jumpForce;
-            JumpingFX();
-            jumpCount++;
-
-
-        }
+        
 
     }
 
@@ -279,7 +285,7 @@ public class PlayerController : MonoBehaviour
         if (!knockBack) { playerAnimator.SetFloat("velocityY", rb.linearVelocityY); }
         else { playerAnimator.SetFloat("velocityY", 0); }
 
-        if (moveAction.IsPressed() && isGrounded)
+        if (moveAction.IsPressed() && isGrounded && !stopMove)
         {
             playerAnimator.SetBool("MoveAction", true);
         }
@@ -298,6 +304,15 @@ public class PlayerController : MonoBehaviour
     {
         if (currentInterractable != null) { currentInterractable.Interract(); }
         
+    }
+
+    public void PlayeCanMove(bool canMove)
+    {
+        stopMove = !canMove;
+        if (!canMove)
+        {
+            rb.linearVelocityX = 0;
+        }
     }
 
     void OnDestroy()

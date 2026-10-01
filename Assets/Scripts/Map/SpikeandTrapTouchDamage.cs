@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class SpikeandTrapTouchDamage : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
-    [SerializeField] PlayerHealth playerHealth;
+    PlayerController playerController;
+    PlayerHealth playerHealth;
     [SerializeField] int onTouchDamage = 1;
-    [SerializeField] FadeToBlack fadeToBlack;
+    FadeToBlack fadeToBlack;
 
     //when we touch a spike were we in grace period?
     bool whenHitGrace;
@@ -18,6 +18,9 @@ public class SpikeandTrapTouchDamage : MonoBehaviour
     {
         whenHitGrace = false;
         onTouchDamage = 1;
+        fadeToBlack = FindAnyObjectByType<FadeToBlack>();
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
+        playerController = FindAnyObjectByType<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
