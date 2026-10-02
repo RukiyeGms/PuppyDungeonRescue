@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // 2 point patrol checking X 
@@ -11,6 +13,7 @@ public class EnemySidePatrol : MonoBehaviour
     //patrolling object
     [SerializeField] Transform enemyTransform;
     [SerializeField] Rigidbody2D rb;
+    EnemyEdgeDetection enemyEdgeDetection;
 
     bool dead;
 
@@ -26,6 +29,7 @@ public class EnemySidePatrol : MonoBehaviour
 
     private void Awake()
     {
+        enemyEdgeDetection = enemyTransform.gameObject.GetComponentInChildren<EnemyEdgeDetection>();
         isPatrolling = true;
         currentPoint = pointB;
         comeBackTimer = 0;
@@ -151,8 +155,10 @@ public class EnemySidePatrol : MonoBehaviour
                 if (comeBackTimer <= 0)
                 {
                     transform.position = enemyTransform.position;
+                    enemyEdgeDetection.CheckEdge();
 
                 }
+
             }
         }
     }
