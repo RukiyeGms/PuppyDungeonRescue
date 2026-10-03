@@ -8,14 +8,17 @@ public class GroundCheck : MonoBehaviour
 
     //hold the coroutine to stop if necessary
     Coroutine coyoteCoroutine;
+    int groundedobjects;
 
     private void Awake()
     {
         coyoteCoroutine = null;
+        groundedobjects = 0;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             if (coyoteCoroutine != null)
@@ -25,6 +28,7 @@ public class GroundCheck : MonoBehaviour
             }
 
             playerController.SetGrounded(true);
+            groundedobjects++;
         }
 
     }
@@ -33,13 +37,20 @@ public class GroundCheck : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            if (gameObject.activeInHierarchy) { coyoteCoroutine = StartCoroutine(CoyoteTime()); } 
+            if (gameObject.activeInHierarchy) 
+            {
+                groundedobjects--;
+
+                if (groundedobjects == 0) { coyoteCoroutine = StartCoroutine(CoyoteTime()); }
+                
+            } 
         }
     }
 
     IEnumerator CoyoteTime()
     {
         yield return new WaitForSeconds(0.1f);
+
         playerController.SetGrounded(false);
         coyoteCoroutine = null;
     }

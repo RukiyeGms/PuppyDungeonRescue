@@ -200,6 +200,7 @@ public class PlayerController : MonoBehaviour
     //wallcheck and ground check
     public void SetGrounded(bool isGrounded)
     {
+
         this.isGrounded = isGrounded;
         playerAnimator.SetBool("isGrounded", isGrounded);
         if (isGrounded) jumpCount = 0;
