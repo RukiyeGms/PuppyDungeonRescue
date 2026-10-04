@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
 
     bool stopMove;
 
+    //SFX
+    float stepSpoundSpeed = 0.35f;
+    bool playingFootsteps;
+
+
 
 
     private void Awake()
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
         currentInterractable = null;
 
+        playingFootsteps = false;
+
 
     }
 
@@ -92,6 +99,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         AnimationManager();
+        SFXManager();
         AdjustGravity();
         if (!knockBack && !dead && !isAttacking && !stopMove)
         {
@@ -289,9 +297,42 @@ public class PlayerController : MonoBehaviour
         if (moveAction.IsPressed() && isGrounded && !stopMove)
         {
             playerAnimator.SetBool("MoveAction", true);
+            //walkingsound play
         }
-        else { playerAnimator.SetBool("MoveAction", false); }
+        else 
+        { 
+            playerAnimator.SetBool("MoveAction", false); 
+            //walking sound stop
+        }
 
+    }
+
+    void SFXManager()
+    {
+        if (moveAction.IsPressed() && isGrounded && !stopMove)
+        {
+            if (!playingFootsteps) 
+            {
+                playingFootsteps = true;
+                InvokeRepeating(nameof(PlayStepSound), 0, stepSpoundSpeed);
+            }
+            
+            //walkingsound play
+        }
+        else
+        {
+            playingFootsteps = false;
+            CancelInvoke(nameof(PlayStepSound));
+            //walking sound stop
+        }
+
+    }
+
+    //footstepsounds
+
+    void PlayStepSound()
+    {
+        SoundEffectManager.Play("PuppyWalk");
     }
 
     public void ChangeInterractable(IInterractable interactable)

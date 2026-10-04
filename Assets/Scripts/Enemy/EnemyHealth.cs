@@ -24,7 +24,9 @@ public class EnemyHealth : MonoBehaviour
         {
             enemyHealth -= damage;
             teethAnim.SetTrigger("hurt");
+            SoundEffectManager.Play("MonsterRoar");
             StartCoroutine(teethEnemy.EnemyKnockedBack(playerOnRight, knockBackForce , enemyHealth));
+            
 
             if (enemyHealth <= 0) 
             { 

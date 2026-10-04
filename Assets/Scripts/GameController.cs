@@ -11,11 +11,16 @@ public class GameController : MonoBehaviour
     [SerializeField] FadeToBlack fadeToBlack;
     [SerializeField]Transform dungeonSpawnLocation;
     [SerializeField] GameObject puppy;
+
+    [SerializeField] GameObject SFXSlider;
+    [SerializeField] GameObject BGSlider;
     void Start()
     {
         puppy.transform.position = dungeonSpawnLocation.position;
         PlayerHealth.OnPuppyDied += GameOver;
         puppyDownScreen.SetActive(false);
+        BGSlider.SetActive(true);
+        SFXSlider.SetActive(true);
     }
 
     private void OnDrawGizmos()
@@ -26,6 +31,9 @@ public class GameController : MonoBehaviour
     void GameOver()
     {
         StartCoroutine(GameOverScreen());
+        MusicManager.PauseBackground();
+        BGSlider.SetActive(false);
+        SFXSlider.SetActive(false);
     }
     IEnumerator GameOverScreen()
     {
@@ -41,6 +49,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
+        MusicManager.PlayBackground(true);
         
     }
 
