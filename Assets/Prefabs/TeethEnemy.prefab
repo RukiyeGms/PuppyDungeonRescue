@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   dead: 0
+  coinPrefab: {fileID: 3023349250840324780, guid: 3aa7a93bf496a4149be977ed4e119f47, type: 3}
 --- !u!114 &6166585240329458207
 MonoBehaviour:
   m_ObjectHideFlags: 0

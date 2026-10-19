@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     int enemyHealth;
     public bool dead;
 
+    [SerializeField] GameObject coinPrefab;
+
     private void Awake()
     {
         dead = false;
@@ -32,11 +34,6 @@ public class EnemyHealth : MonoBehaviour
             { 
                 Die();
                 return;
-            }
-            else
-            {
-                //hurtanimation
-                
             }
 
 
@@ -67,6 +64,7 @@ public class EnemyHealth : MonoBehaviour
     IEnumerator DestroySelf()
     {
         yield return new WaitForSeconds(1);
+        Instantiate(coinPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

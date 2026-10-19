@@ -7,7 +7,7 @@ public class CameraShakeManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = null;
+        //instance = null;
         instance = this;
     }
 

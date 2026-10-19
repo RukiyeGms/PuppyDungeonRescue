@@ -1,21 +1,31 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-
+    public static GameController instance;
     //forgameover
     [SerializeField] GameObject puppyDownScreen;
     [SerializeField] FadeToBlack fadeToBlack;
-    [SerializeField]Transform dungeonSpawnLocation;
+    [SerializeField] Transform dungeonSpawnLocation;
     [SerializeField] GameObject puppy;
 
     [SerializeField] GameObject SFXSlider;
     [SerializeField] GameObject BGSlider;
+
+    int Coins;
+    CoinUI coinUI;
+
+    private void Awake()
+    {
+        instance = this;
+        coinUI = FindAnyObjectByType<CoinUI>();
+    }
     void Start()
     {
+        Coins = 0;
+
         puppy.transform.position = dungeonSpawnLocation.position;
         PlayerHealth.OnPuppyDied += GameOver;
         puppyDownScreen.SetActive(false);
@@ -47,6 +57,7 @@ public class GameController : MonoBehaviour
     public void StartOver()
     {
         Time.timeScale = 1;
+        Coins = 0;
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
         MusicManager.PlayBackground(true);
@@ -59,4 +70,15 @@ public class GameController : MonoBehaviour
     }
 
 
+    public static void CoinUp()
+    {
+        instance.Coins++;
+        SoundEffectManager.Play("Coin");
+        instance.coinUI.UpdateCoinText();
+    }
+
+    public static int getCoin()
+    {
+        return instance.Coins;
+    }
 }
