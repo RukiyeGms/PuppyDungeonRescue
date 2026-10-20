@@ -176,6 +176,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void OnMenu()
+    {
+        GameController.OpenMenu();
+    }
+
     void JumpingFX()
     {
         playerAnimator.SetTrigger("jumping");

@@ -15,7 +15,7 @@ public class GroundCheck : MonoBehaviour
         coyoteCoroutine = null;
         groundedobjects = 0;
     }
-
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))

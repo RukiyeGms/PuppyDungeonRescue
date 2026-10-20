@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -14,8 +15,15 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject SFXSlider;
     [SerializeField] GameObject BGSlider;
 
+    bool gameOver;
+
     int Coins;
     CoinUI coinUI;
+
+    bool hasKey;
+    [SerializeField] Image keyUIImage;
+
+    [SerializeField] GameObject menuScreen;
 
     private void Awake()
     {
@@ -25,12 +33,20 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Coins = 0;
+        hasKey = false;
+        keyUIImage.enabled = false;
+
+        gameOver = false;
+        //disable menu
 
         puppy.transform.position = dungeonSpawnLocation.position;
         PlayerHealth.OnPuppyDied += GameOver;
         puppyDownScreen.SetActive(false);
+        menuScreen.SetActive(false);
         BGSlider.SetActive(true);
         SFXSlider.SetActive(true);
+
+        MusicManager.PlayBackground(true);
     }
 
     private void OnDrawGizmos()
@@ -44,6 +60,7 @@ public class GameController : MonoBehaviour
         MusicManager.PauseBackground();
         BGSlider.SetActive(false);
         SFXSlider.SetActive(false);
+        gameOver = true;
     }
     IEnumerator GameOverScreen()
     {
@@ -61,6 +78,7 @@ public class GameController : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
         MusicManager.PlayBackground(true);
+        gameOver = false;
         
     }
 
@@ -70,9 +88,9 @@ public class GameController : MonoBehaviour
     }
 
 
-    public static void CoinUp()
+    public static void CoinUp(int amount)
     {
-        instance.Coins++;
+        instance.Coins += amount;
         SoundEffectManager.Play("Coin");
         instance.coinUI.UpdateCoinText();
     }
@@ -80,5 +98,47 @@ public class GameController : MonoBehaviour
     public static int getCoin()
     {
         return instance.Coins;
+    }
+
+    public static void PickUpKey()
+    {
+        instance.hasKey = true;
+        SoundEffectManager.Play("Key");
+        instance.keyUIImage.enabled = true;
+    }
+
+    public static bool AskKey()
+    {
+        return instance.hasKey;
+    }
+
+    public static void UseKey()
+    {
+        //if there is a key unlock cage
+        instance.keyUIImage.enabled = false;
+    }
+
+    public static void OpenMenu()
+    {
+        if (!instance.gameOver )
+        {
+            instance.menuScreen.SetActive(true);
+            Time.timeScale = 0;
+            //time pause
+        }
+    }
+
+    public void CloseMenu()
+    {
+        menuScreen.SetActive(false);
+        Time.timeScale = 1;
+        //time cont
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+        MusicManager.PauseBackground();
+        Time.timeScale = 1;
     }
 }
