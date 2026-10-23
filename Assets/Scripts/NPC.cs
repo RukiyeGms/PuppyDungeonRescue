@@ -13,12 +13,25 @@ public class NPC : MonoBehaviour , IInterractable
     bool isTyping, isDialogueActive;
     int dialogueIndex;
     NPCDialogue dialogue;
+    [SerializeField] NPCDialogueManager dialogueManager;
 
     PlayerController playerController;
+
+    [SerializeField] Animator pressAAnim;
+
+    //Spesific dialogues
+    [SerializeField] NPCDialogue healDialogue;
+    [SerializeField] NPCDialogue keyDialogue;
+    [SerializeField] NPCDialogue freeDialogue;
+
+    [SerializeField] GameObject cagesprite;
+    [SerializeField] GameObject pressAPos2;
+    [SerializeField] GameObject sheepOnMap;
 
     void Start()
     {
         isDialogueActive = false;
+        SetPressAAnim(false);
             
     }
 
@@ -49,7 +62,7 @@ public class NPC : MonoBehaviour , IInterractable
         {
             playerController = collision.GetComponent<PlayerController>();
             playerController.ChangeInterractable(this);
-            //add press a anim
+            SetPressAAnim(true);
         }
     }
 
@@ -58,11 +71,13 @@ public class NPC : MonoBehaviour , IInterractable
         if (collision.CompareTag("Player"))
         {
             playerController.InterractableNull();
+            SetPressAAnim(false);
         }
     }
 
     void StartDialogue()
     {
+        dialogueManager.CheckActiveDialogue();
         isDialogueActive = true;
         dialogueIndex = 0;
         npcImage.sprite = dialogue.npcArt;
@@ -70,9 +85,12 @@ public class NPC : MonoBehaviour , IInterractable
         
         dialoguePanel.SetActive(true);
 
-        //
-        Time.timeScale = 0;
+        
 
+            //
+            Time.timeScale = 0;
+
+        HighlightSpeakerImage();
         StartCoroutine(TypeLine());
     }
 
@@ -98,6 +116,8 @@ public class NPC : MonoBehaviour , IInterractable
             {
                 npcName.text = dialogue.npcName[dialogueIndex];
             }
+
+            HighlightSpeakerImage();
             
             StartCoroutine(TypeLine());
 
@@ -113,6 +133,10 @@ public class NPC : MonoBehaviour , IInterractable
         dialogueLine.text = null;
         npcImage.sprite = null;
         npcName.text = null;
+
+        dialogueManager.AddReadList(dialogue);
+        if (dialogue == healDialogue) { dialogueManager.SheepHeal(); }
+        else if (dialogue == keyDialogue) { CageUnlock(); }
 
     }
 
@@ -135,4 +159,35 @@ public class NPC : MonoBehaviour , IInterractable
             ContinueDialogue();
         }
     }
+
+    void HighlightSpeakerImage()
+    {
+        if (npcName.text == "Sheep")
+        {
+            npcImage.color = Color.white;
+            puppyImage.color = Color.gray;
+        }
+        else if (npcName.text == "Puppy")
+        {
+            npcImage.color = Color.gray;
+            puppyImage.color = Color.white;
+        }
+    }
+
+    void SetPressAAnim(bool boolean)
+    {
+        pressAAnim.gameObject.SetActive(boolean);
+    }
+
+    public void CageUnlock()
+    {   
+        pressAAnim.gameObject.transform.position = pressAPos2.transform.position;
+        cagesprite.gameObject.SetActive(false);
+        SoundEffectManager.Play("Unlock");
+        GameController.UseKey();
+    }
+
+
+
+
 }

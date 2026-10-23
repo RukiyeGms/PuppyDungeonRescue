@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject menuScreen;
 
+    bool hasSheep;
+    //adventurerımage
+
     private void Awake()
     {
         instance = this;
@@ -34,6 +37,7 @@ public class GameController : MonoBehaviour
     {
         Coins = 0;
         hasKey = false;
+        hasSheep = false;
         keyUIImage.enabled = false;
 
         gameOver = false;
@@ -116,6 +120,7 @@ public class GameController : MonoBehaviour
     {
         //if there is a key unlock cage
         instance.keyUIImage.enabled = false;
+        instance.hasKey = false;
     }
 
     public static void OpenMenu()
@@ -140,5 +145,15 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("MainMenuScene");
         MusicManager.PauseBackground();
         Time.timeScale = 1;
+    }
+
+    public static bool AskSheep()
+    {
+        return instance.hasSheep;
+    }
+
+    public static void GetSheep()
+    {
+        instance.hasSheep = true;
     }
 }

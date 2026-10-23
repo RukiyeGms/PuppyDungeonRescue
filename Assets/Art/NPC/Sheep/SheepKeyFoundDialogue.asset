@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4aa2e786580ac74595ff822fbeda71b, type: 3}
+  m_Name: SheepKeyFoundDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName:
+  - Puppy
+  - Sheep
+  npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
+  writingSpeed: 0.05
+  dialougeLines:
+  - Rejoice! I found a key.
+  - Finally! Quick, try it.
+  autoProgressLines: 0000
+  autoProgressDelay: 1.5
+  voicesound: {fileID: 8300000, guid: a721f520350a73841be13c93917fc2cd, type: 3}
+  voicePitch: 1
