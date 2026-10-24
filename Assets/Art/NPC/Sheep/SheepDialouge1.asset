@@ -38,7 +38,7 @@ MonoBehaviour:
   - Well... Hurry up, get me out of here.
   - You might find a key if you look around.
   - Please hurry.
-  autoProgressLines: 00000000000000000000
+  autoProgressLines: 0000000000000000000000
   autoProgressDelay: 1.5
   voicesound: {fileID: 8300000, guid: a721f520350a73841be13c93917fc2cd, type: 3}
   voicePitch: 1

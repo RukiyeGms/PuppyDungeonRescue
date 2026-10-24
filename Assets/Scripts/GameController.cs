@@ -43,10 +43,16 @@ public class GameController : MonoBehaviour
     [SerializeField] Image room5;
     Image lastroom;
 
+    //to rebound sliders to audio managers
+    [SerializeField] Slider musicSlider;
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider bgSlider;
+
     private void Awake()
     {
         instance = this;
         coinUI = FindAnyObjectByType<CoinUI>();
+        ChangeAllAudioSliders();
     }
     void Start()
     {
@@ -59,6 +65,7 @@ public class GameController : MonoBehaviour
         winPanel.SetActive(false);
         lastroom = room1;
         ChangeMap(room1);
+        
 
         gameOver = false;
         //disable menu
@@ -70,7 +77,8 @@ public class GameController : MonoBehaviour
         BGSlider.SetActive(true);
         SFXSlider.SetActive(true);
 
-        MusicManager.PlayBackground(true);
+        BGManager.PlayBackground(true);
+        MusicManager.PlayMusic(true);
     }
 
     private void OnDrawGizmos()
@@ -81,7 +89,6 @@ public class GameController : MonoBehaviour
     void GameOver()
     {
         StartCoroutine(GameOverScreen());
-        MusicManager.PauseBackground();
         BGSlider.SetActive(false);
         SFXSlider.SetActive(false);
         gameOver = true;
@@ -91,6 +98,7 @@ public class GameController : MonoBehaviour
         yield return StartCoroutine(fadeToBlack.FadetoBlack());
         fadeToBlack.gameObject.SetActive(false);
         puppyDownScreen.SetActive(true);
+        MusicManager.PauseMusic();
         //pauses game
         Time.timeScale = 0;
     }
@@ -101,7 +109,7 @@ public class GameController : MonoBehaviour
         Coins = 0;
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
-        MusicManager.PlayBackground(true);
+        BGManager.PlayBackground(true);
         gameOver = false;
         
     }
@@ -163,7 +171,8 @@ public class GameController : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenuScene");
-        MusicManager.PauseBackground();
+        BGManager.PauseBackground();
+        MusicManager.PauseMusic();
         Time.timeScale = 1;
     }
 
@@ -228,6 +237,18 @@ public class GameController : MonoBehaviour
         roomImage.color = c;
 
         instance.lastroom = roomImage;
+    }
+
+    void ChangeAllAudioSliders()
+    {
+        MusicManager.ChangeMusicSlider(musicSlider);
+        MusicManager.SetVolume(musicSlider.value);
+
+        SoundEffectManager.ChangeSFXSlider(sfxSlider);
+        SoundEffectManager.SetVolume(sfxSlider.value);
+
+        BGManager.ChangeBgSlider(bgSlider);
+        BGManager.SetVolume(bgSlider.value);
     }
 
 }

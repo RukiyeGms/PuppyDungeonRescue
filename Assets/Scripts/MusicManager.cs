@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class MusicManager : MonoBehaviour
 {
     private static MusicManager instance;
     AudioSource audioSource;
-    public AudioClip backgroundAudio;
-    [SerializeField] Slider slider;
+    public AudioClip musicAudio;
+    Slider slider;
 
     private void Awake()
     {
@@ -20,27 +21,26 @@ public class MusicManager : MonoBehaviour
     }
     void Start()
     {
-        if (backgroundAudio != null) { PlayBackground(false , backgroundAudio); }
-        slider.onValueChanged.AddListener((value) => OnValueChanged());
+        if (musicAudio != null) { PlayMusic(false, musicAudio); }
     }
 
     //=null makes the parameter optional
-    public static void PlayBackground(bool resetSong, AudioClip audioClip = null)
+    public static void PlayMusic(bool resetSong, AudioClip audioClip = null)
     {
         if (audioClip != null)
         {
             instance.audioSource.clip = audioClip;
         }
-        if (instance.audioSource.clip != null) 
+        if (instance.audioSource.clip != null)
         {
-            if (!resetSong) { instance.audioSource.Stop();  }
+            if (!resetSong) { instance.audioSource.Stop(); }
             instance.audioSource.Play();
         }
     }
 
     public static void SetVolume(float volume)
     {
-        instance.audioSource.volume = volume;   
+        instance.audioSource.volume = volume;
     }
 
     public void OnValueChanged()
@@ -49,8 +49,16 @@ public class MusicManager : MonoBehaviour
     }
 
 
-    public static void PauseBackground()
-        {
-            instance.audioSource.Pause();
-        }
+    public static void PauseMusic()
+    {
+        instance.audioSource.Pause();
+    }
+
+    public static void ChangeMusicSlider(Slider slider)
+    {
+        instance.slider = slider;
+        instance.slider.onValueChanged.AddListener((value) => instance.OnValueChanged());
+    }
+
+
 }

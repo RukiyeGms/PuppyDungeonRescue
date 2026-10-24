@@ -6,7 +6,7 @@ public class SoundEffectManager : MonoBehaviour
     static SoundEffectManager instance;
     static AudioSource audioSource;
     static SoundEffectLibrary soundEffectLibrary;
-    [SerializeField] Slider SFXSlider;
+    Slider SFXSlider;
 
 
     void Awake()
@@ -44,5 +44,11 @@ public class SoundEffectManager : MonoBehaviour
     public void OnValueChanged()
     {
         SetVolume(SFXSlider.value);
+    }
+
+    public static void ChangeSFXSlider(Slider slider)
+    {
+        instance.SFXSlider = slider;
+        instance.SFXSlider.onValueChanged.AddListener((value) => instance.OnValueChanged());
     }
 }
