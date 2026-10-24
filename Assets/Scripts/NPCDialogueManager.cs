@@ -38,8 +38,8 @@ public class NPCDialogueManager : MonoBehaviour
 
     public void CheckActiveDialogue()
     {
-        /// element 0 first after element 0 is read element 1
-        /// after element 1  read element 2 after read elemnt 3 and if no other options apply go back to readin element 1
+        /// read element 1 after exhausting dialouge options
+        /// after element 0  read element 2 after read elemnt 3 and if no other options apply go back to readin element 1
         /// 
         //If Puppy needs heal and didn't heal yet heal dialouge element 4
 
@@ -65,11 +65,7 @@ public class NPCDialogueManager : MonoBehaviour
         }
         else
         {
-            if (!dialoguereadlist.Contains(dialogues[1]))
-            {
-                npc.ChangeDialogue(dialogues[1]);
-            }
-            else if (!dialoguereadlist.Contains(dialogues[2]))
+            if (!dialoguereadlist.Contains(dialogues[2]))
             {
                 npc.ChangeDialogue(dialogues[2]);
             }

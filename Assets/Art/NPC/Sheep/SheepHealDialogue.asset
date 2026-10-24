@@ -25,16 +25,16 @@ MonoBehaviour:
   - Sheep
   - Sheep
   npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
-  writingSpeed: 0.05
+  writingSpeed: 0.04
   dialougeLines:
   - You look like a healer.
   - Are you?
   - Yes.
   - Can you heal me?
   - I don't know...
-  - Maybe for some coin you found around...
+  - Hmm... Maybe, for a few coins you picked up along the way...
   - ...
-  - If I die no one is rescuing you.
+  - If I die, no one is rescuing you.
   - ...
   - Fine. But I only have one heal in me.
   - Try not to die.

@@ -7,6 +7,7 @@ public class BGManager : MonoBehaviour
     AudioSource audioSource;
     public AudioClip backgroundAudio;
     Slider slider;
+    float sValue = 1;
 
     private void Awake()
     {
@@ -21,7 +22,9 @@ public class BGManager : MonoBehaviour
     void Start()
     {
         if (backgroundAudio != null) { PlayBackground(false , backgroundAudio); }
+        
         slider.onValueChanged.AddListener((value) => OnValueChanged());
+        
     }
 
     //=null makes the parameter optional
@@ -46,6 +49,7 @@ public class BGManager : MonoBehaviour
     public void OnValueChanged()
     {
         SetVolume(slider.value);
+        sValue = slider.value;
     }
 
 
@@ -55,6 +59,7 @@ public class BGManager : MonoBehaviour
     }
     public static void ChangeBgSlider(Slider slider)
     {
+        if (slider != null) { slider.value = instance.sValue; }
         instance.slider = slider;
         instance.slider.onValueChanged.AddListener((value) => instance.OnValueChanged());
     }

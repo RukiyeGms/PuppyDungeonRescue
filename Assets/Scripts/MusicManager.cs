@@ -7,7 +7,10 @@ public class MusicManager : MonoBehaviour
     private static MusicManager instance;
     AudioSource audioSource;
     public AudioClip musicAudio;
+    public AudioClip winAudio;
+
     Slider slider;
+    float sValue = 0.4f;
 
     private void Awake()
     {
@@ -22,6 +25,7 @@ public class MusicManager : MonoBehaviour
     void Start()
     {
         if (musicAudio != null) { PlayMusic(false, musicAudio); }
+        
     }
 
     //=null makes the parameter optional
@@ -46,6 +50,7 @@ public class MusicManager : MonoBehaviour
     public void OnValueChanged()
     {
         SetVolume(slider.value);
+        sValue = slider.value;
     }
 
 
@@ -56,9 +61,19 @@ public class MusicManager : MonoBehaviour
 
     public static void ChangeMusicSlider(Slider slider)
     {
+        if (slider != null) { slider.value = instance.sValue; }
         instance.slider = slider;
         instance.slider.onValueChanged.AddListener((value) => instance.OnValueChanged());
     }
 
+    public static void PlayCaveMusic()
+    {
+        PlayMusic(false, instance.musicAudio);
+    }
+
+    public static void PlayWinMusic()
+    {
+        PlayMusic(true, instance.winAudio);
+    }
 
 }

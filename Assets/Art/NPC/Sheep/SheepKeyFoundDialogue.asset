@@ -16,7 +16,7 @@ MonoBehaviour:
   - Puppy
   - Sheep
   npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
-  writingSpeed: 0.05
+  writingSpeed: 0.04
   dialougeLines:
   - Rejoice! I found a key.
   - Finally! Quick, try it.

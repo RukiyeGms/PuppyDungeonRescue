@@ -149,7 +149,9 @@ public class NPC : MonoBehaviour , IInterractable
         foreach (char c in dialogue.dialougeLines[dialogueIndex])
         {
             dialogueLine.text += c;
+            SoundEffectManager.PlayVoice(dialogue.voicesound, dialogue.voicePitch);
             yield return new WaitForSecondsRealtime(dialogue.writingSpeed);
+            
         }
 
         isTyping = false;

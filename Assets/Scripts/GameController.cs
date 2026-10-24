@@ -78,7 +78,7 @@ public class GameController : MonoBehaviour
         SFXSlider.SetActive(true);
 
         BGManager.PlayBackground(true);
-        MusicManager.PlayMusic(true);
+        MusicManager.PlayCaveMusic();
     }
 
     private void OnDrawGizmos()
@@ -203,6 +203,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
 
         instance.WinCoroutine();
+        MusicManager.PlayWinMusic();
     }
 
     void WinCoroutine()

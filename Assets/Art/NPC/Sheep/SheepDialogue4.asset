@@ -23,14 +23,14 @@ MonoBehaviour:
   - Puppy
   - Puppy
   npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
-  writingSpeed: 0.05
+  writingSpeed: 0.04
   dialougeLines:
   - Where are the rest of your party?
   - Did they abandon you?
   - I don't have a party.
   - I came in alone.
-  - I don't need some muscle for brains to collect a few coins in the low levels.
-  - Tsk tsk... Don't you know how foolish it is to go in a dungeon alone?
+  - I don't need some musclehead to collect a few coins in the low levels.
+  - Tsk tsk... Don't you know how foolish it is to enter a dungeon alone?
   - I don't see anyone else with you.
   - ...
   - I have my bag, obviously.

@@ -20,13 +20,13 @@ MonoBehaviour:
   - Puppy
   - Sheep
   npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
-  writingSpeed: 0.05
+  writingSpeed: 0.04
   dialougeLines:
-  - I saw a chest int this room.
-  - I was trying to ge to it before this thing fell on me.
-  - Why would anyone set a trap so close to the dungeon enterance?
-  - Maybe they were hoping to catch a low level monster?
-  - Or kidnap an ametour adventurer...
+  - I saw a chest in this room.
+  - I was trying to get to it before this thing fell on me.
+  - Why would anyone set a trap so close to the dungeon entrance?
+  - Maybe they were hoping to catch a low-level monster?
+  - Or kidnap an amateur adventurer...
   - ...
   autoProgressLines: 000000000000
   autoProgressDelay: 1.5

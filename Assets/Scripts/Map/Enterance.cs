@@ -93,7 +93,8 @@ public class Enterance : MonoBehaviour, IInterractable
         foreach (char c in cannotLeaveDialogue)
         {
             dialogueText.text += c;
-            yield return new WaitForSecondsRealtime(0.05f);
+            SoundEffectManager.Play("Talk");
+            yield return new WaitForSecondsRealtime(0.04f);
         }
 
         isTyping = false;

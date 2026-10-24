@@ -17,11 +17,11 @@ MonoBehaviour:
   - Puppy
   - Sheep
   npcArt: {fileID: 3700522637049994160, guid: bd08f1efbae33524e803c318dacb2f1f, type: 3}
-  writingSpeed: 0.05
+  writingSpeed: 0.04
   dialougeLines:
   - Did you find the key?
   - I am still looking for it.
-  - Would you hurry up?
+  - Would you hurry up already?
   autoProgressLines: 000000
   autoProgressDelay: 1.5
   voicesound: {fileID: 8300000, guid: a721f520350a73841be13c93917fc2cd, type: 3}
