@@ -18,6 +18,7 @@ MonoBehaviour:
   - Sheep
   - Sheep
   - Puppy
+  - Puppy
   - Sheep
   - Puppy
   - Sheep
@@ -28,8 +29,9 @@ MonoBehaviour:
   dialougeLines:
   - AH! PRESS A FOR THE NEXT LINE!
   - Finally!
-  - You took your sweet time, didm't you?
+  - You took your sweet time, didn't you?
   - I thought I would rot in here...
+  - ...
   - Sorry, traffic.
   - I bet you picked up all the loot too...
   - ...

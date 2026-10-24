@@ -137,6 +137,7 @@ public class NPC : MonoBehaviour , IInterractable
         dialogueManager.AddReadList(dialogue);
         if (dialogue == healDialogue) { dialogueManager.SheepHeal(); }
         else if (dialogue == keyDialogue) { CageUnlock(); }
+        else if (dialogue == freeDialogue) { TakeSheep(); }
 
     }
 
@@ -185,6 +186,14 @@ public class NPC : MonoBehaviour , IInterractable
         cagesprite.gameObject.SetActive(false);
         SoundEffectManager.Play("Unlock");
         GameController.UseKey();
+    }
+
+    public void TakeSheep()
+    {
+        SoundEffectManager.Play("Baa");
+        sheepOnMap.SetActive(false);
+        this.gameObject.SetActive(false);
+        GameController.GetSheep();
     }
 
 

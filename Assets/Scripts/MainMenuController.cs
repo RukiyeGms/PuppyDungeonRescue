@@ -3,8 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField] GameObject creditsPanel;
+
     public void StartGame()
     {
+        creditsPanel.SetActive(false);
         SceneManager.LoadScene("MainScene");
     }
 
@@ -15,11 +18,11 @@ public class MainMenuController : MonoBehaviour
 
     public void OpenCredits()
     {
-        //open credits
+        creditsPanel.SetActive(true);
     }
 
     public void CloseCredits()
     {
-        //close credits
+        creditsPanel.SetActive(false);
     }
 }

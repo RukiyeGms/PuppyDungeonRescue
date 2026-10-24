@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +16,12 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject SFXSlider;
     [SerializeField] GameObject BGSlider;
 
+    [SerializeField] GameObject winPanel;
+    [SerializeField] TextMeshProUGUI pickedText;
+    [SerializeField] TextMeshProUGUI earnedText;
+    [SerializeField] TextMeshProUGUI totalText;
+    [SerializeField] GameObject coinLine;
+
     bool gameOver;
 
     int Coins;
@@ -22,11 +29,19 @@ public class GameController : MonoBehaviour
 
     bool hasKey;
     [SerializeField] Image keyUIImage;
+    [SerializeField] Image adventurerIconImage;
+    [SerializeField] Image adventurerOnMapImage;
 
     [SerializeField] GameObject menuScreen;
 
     bool hasSheep;
-    //adventurerımage
+
+    [SerializeField] Image room1;
+    [SerializeField] Image room2;
+    [SerializeField] Image room3;
+    [SerializeField] Image room4;
+    [SerializeField] Image room5;
+    Image lastroom;
 
     private void Awake()
     {
@@ -39,6 +54,11 @@ public class GameController : MonoBehaviour
         hasKey = false;
         hasSheep = false;
         keyUIImage.enabled = false;
+        adventurerIconImage.enabled = false;
+        adventurerOnMapImage.enabled = true;
+        winPanel.SetActive(false);
+        lastroom = room1;
+        ChangeMap(room1);
 
         gameOver = false;
         //disable menu
@@ -155,5 +175,59 @@ public class GameController : MonoBehaviour
     public static void GetSheep()
     {
         instance.hasSheep = true;
+        instance.adventurerIconImage.enabled = true;
+        instance.adventurerOnMapImage.enabled = false;
     }
+
+    public static void Win()
+    {
+        instance.winPanel.SetActive(true);
+        instance.pickedText.text = $"Coins found: {instance.Coins}";
+        instance.pickedText.gameObject.SetActive(false);
+
+        instance.earnedText.text = "Payment received: 50";
+        instance.earnedText.gameObject.SetActive(false);
+
+        instance.totalText.text = $"Total earned: {instance.Coins + 50}";
+        instance.totalText.gameObject.SetActive(false);
+        instance.coinLine.SetActive(false);
+        Time.timeScale = 0;
+
+        instance.WinCoroutine();
+    }
+
+    void WinCoroutine()
+    {
+        StartCoroutine(WinScreen());
+    }
+
+    IEnumerator WinScreen()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        instance.pickedText.gameObject.SetActive(true );
+        SoundEffectManager.Play("Boom");
+        yield return new WaitForSecondsRealtime(1.5f);
+        instance.earnedText.gameObject.SetActive(true);
+        SoundEffectManager.Play("Boom");
+        yield return new WaitForSecondsRealtime(1.5f);
+        instance.totalText.gameObject.SetActive(true);
+        instance.coinLine.SetActive(true);
+        SoundEffectManager.Play("Boom");
+
+    }
+
+    
+    public static void ChangeMap(Image roomImage)
+    {
+
+        Color c = instance.lastroom.color;
+        c.a = 0.4f;
+        instance.lastroom.color = c;
+
+        c.a = 0.9f;
+        roomImage.color = c;
+
+        instance.lastroom = roomImage;
+    }
+
 }

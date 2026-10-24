@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
                 isWallJumping = true;
                 JumpingFX();
                 jumpCount = 1;
+                SoundEffectManager.Play("Jump");
 
                 if (wallJumpDirection < 0)
                 {
@@ -168,6 +169,7 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocityY = jumpForce;
                 JumpingFX();
                 jumpCount++;
+                SoundEffectManager.Play("Jump");
 
 
             }

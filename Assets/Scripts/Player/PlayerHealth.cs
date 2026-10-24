@@ -49,6 +49,7 @@ public class PlayerHealth : MonoBehaviour
             healthUI.UpdateHearts(currentHealth);
             StartCoroutine(GracePeriod());
             CameraShakeManager.instance.CameraShake(impulseSource);
+            SoundEffectManager.Play("Bark");
 
         }
 
@@ -56,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
         {
             /*Die*/
             OnPuppyDied.Invoke();
+            SoundEffectManager.Play("Bark");
         }
     }
 

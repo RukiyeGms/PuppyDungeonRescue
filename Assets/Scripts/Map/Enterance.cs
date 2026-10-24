@@ -58,7 +58,7 @@ public class Enterance : MonoBehaviour, IInterractable
     {
         if (GameController.AskSheep())
         {
-            //finish game
+            GameController.Win();
             return;
         }
 

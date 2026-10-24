@@ -26,7 +26,7 @@ MonoBehaviour:
   writingSpeed: 0.05
   dialougeLines:
   - Where are the rest of your party?
-  - Did they abandon you like this?
+  - Did they abandon you?
   - I don't have a party.
   - I came in alone.
   - I don't need some muscle for brains to collect a few coins in the low levels.

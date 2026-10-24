@@ -69,6 +69,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
+        SoundEffectManager.Play("Swish");
         if (FacingRight()) { rb.linearVelocityX = attackDashSpeed; }
         else { rb.linearVelocityX = -attackDashSpeed; }
         

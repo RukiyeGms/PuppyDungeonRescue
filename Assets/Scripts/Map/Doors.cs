@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Doors : MonoBehaviour , IInterractable  
 {
@@ -14,6 +15,8 @@ public class Doors : MonoBehaviour , IInterractable
     FadeToBlack fadeToBlack;
     Animator doorInstructionAnimator;
     [SerializeField] SpriteRenderer doorInstructionSprite;
+
+    [SerializeField] Image nextRoom;
 
     void Awake()
     {
@@ -61,6 +64,7 @@ public class Doors : MonoBehaviour , IInterractable
         playerTransform.position = teleportTransform.position;
         playerController.respawnTransform = teleportTransform;
         confiner.BoundingShape2D = boxCollider;
+        GameController.ChangeMap(nextRoom);
         
         playerSprite.enabled = true;
         yield return new WaitForSeconds(1f);
