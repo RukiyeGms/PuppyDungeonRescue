@@ -85,14 +85,22 @@ public class TeethEnemy : MonoBehaviour
                 return;
             }
 
-            
-            if (transform.position.x < playerPosition.x)
+
+            float distanceX = playerPosition.x - transform.position.x;
+
+            if (Mathf.Abs(distanceX) < 0.5f)
+            {
+                rb.linearVelocityX = 0f;
+                return;
+            }
+
+            if (distanceX > 0)
             {
                 rb.linearVelocityX = followSpeed;
             }
-            else if (transform.position.x > playerPosition.x)
+            else
             {
-                rb.linearVelocityX = - followSpeed;
+                rb.linearVelocityX = -followSpeed;
             }
 
             Flip();

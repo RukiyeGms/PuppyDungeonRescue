@@ -36835,7 +36835,8 @@ MonoBehaviour:
   npcImage: {fileID: 982226211}
   puppyName: {fileID: 929931617}
   dialogueText: {fileID: 1588969267}
-  cannotLeaveDialogue: I need to rescue the adventurer.
+  cannotLeaveDialogue: I need to rescue the adventurer and press a again to close
+    the dialogue.
   pupname: Puppy
 --- !u!1001 &7299282672425412188
 PrefabInstance:
