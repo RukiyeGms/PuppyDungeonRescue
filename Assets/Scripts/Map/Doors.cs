@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Doors : MonoBehaviour , IInterractable  
 {
     Transform playerTransform;
@@ -18,12 +19,15 @@ public class Doors : MonoBehaviour , IInterractable
 
     [SerializeField] Image nextRoom;
 
+    bool isTransitioning;
+
     void Awake()
     {
         confiner = FindAnyObjectByType<CinemachineConfiner2D>();
         fadeToBlack = FindAnyObjectByType<FadeToBlack>();
         doorInstructionAnimator = GetComponentInChildren<Animator>();
         SetDoorInstructionAnim(false);
+        isTransitioning = false;
         
     }
 
@@ -43,8 +47,9 @@ public class Doors : MonoBehaviour , IInterractable
 
     public void Interract()
     {
-        
+        if (isTransitioning) {return; }
         StartCoroutine(FadeinandOut());
+        isTransitioning = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -70,6 +75,7 @@ public class Doors : MonoBehaviour , IInterractable
         yield return new WaitForSeconds(1f);
         playerController.PlayeCanMove(true);
         yield return StartCoroutine (fadeToBlack.FadeBackfromBlack());
+        isTransitioning = false;
     }
 
     void SetDoorInstructionAnim(bool boolean)
