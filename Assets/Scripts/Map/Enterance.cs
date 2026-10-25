@@ -67,6 +67,7 @@ public class Enterance : MonoBehaviour, IInterractable
             dialogueOn = true;
             TurnOnPanel();
             StartCoroutine(TypeLine());
+            Time.timeScale = 0;
         }
         else
         {
@@ -80,6 +81,7 @@ public class Enterance : MonoBehaviour, IInterractable
             {
                 TurnOffPanel();
                 dialogueOn = false;
+                Time.timeScale = 1;
             }
         }
 

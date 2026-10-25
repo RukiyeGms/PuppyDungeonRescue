@@ -32,7 +32,7 @@ public class FadeToBlack : MonoBehaviour
         {
             transparency += toBlackRate;
             ChangeAlpha(transparency);
-            yield return new WaitForSeconds(toBlackSpeed);
+            yield return new WaitForSecondsRealtime(toBlackSpeed);
 
         }
         
@@ -48,7 +48,7 @@ public class FadeToBlack : MonoBehaviour
         {
             transparency -= toBlackRate;
             ChangeAlpha(transparency);
-            yield return new WaitForSeconds(toBlackSpeed);
+            yield return new WaitForSecondsRealtime(toBlackSpeed);
         }
         gameObject.SetActive(false);
 

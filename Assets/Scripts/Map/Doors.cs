@@ -26,9 +26,14 @@ public class Doors : MonoBehaviour , IInterractable
         confiner = FindAnyObjectByType<CinemachineConfiner2D>();
         fadeToBlack = FindAnyObjectByType<FadeToBlack>();
         doorInstructionAnimator = GetComponentInChildren<Animator>();
+        
+        
+    }
+
+    void Start()
+    {
         SetDoorInstructionAnim(false);
         isTransitioning = false;
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,18 +68,32 @@ public class Doors : MonoBehaviour , IInterractable
 
     IEnumerator FadeinandOut()
     {
+
+
         playerSprite.enabled = false;
         playerController.PlayeCanMove(false);
+
         yield return StartCoroutine(fadeToBlack.FadetoBlack());
+
+
+
         playerTransform.position = teleportTransform.position;
         playerController.respawnTransform = teleportTransform;
         confiner.BoundingShape2D = boxCollider;
         GameController.ChangeMap(nextRoom);
-        
+
         playerSprite.enabled = true;
+
         yield return new WaitForSeconds(1f);
+
+
+
         playerController.PlayeCanMove(true);
-        yield return StartCoroutine (fadeToBlack.FadeBackfromBlack());
+
+        yield return StartCoroutine(fadeToBlack.FadeBackfromBlack());
+
+ 
+
         isTransitioning = false;
     }
 

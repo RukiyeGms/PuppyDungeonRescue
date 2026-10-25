@@ -23,11 +23,6 @@ public class SoundEffectManager : MonoBehaviour
 
     }
 
-    void Start()
-    {
-        SFXSlider.onValueChanged.AddListener((value) => OnValueChanged());
-        
-    }
 
     public static void Play(string soundName)
     {

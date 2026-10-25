@@ -22,8 +22,7 @@ public class BGManager : MonoBehaviour
     void Start()
     {
         if (backgroundAudio != null) { PlayBackground(false , backgroundAudio); }
-        
-        slider.onValueChanged.AddListener((value) => OnValueChanged());
+       
         
     }
 

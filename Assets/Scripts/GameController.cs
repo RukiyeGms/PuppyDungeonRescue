@@ -52,7 +52,8 @@ public class GameController : MonoBehaviour
     {
         instance = this;
         coinUI = FindAnyObjectByType<CoinUI>();
-        ChangeAllAudioSliders();
+        lastroom = room1;
+
     }
     void Start()
     {
@@ -63,9 +64,11 @@ public class GameController : MonoBehaviour
         adventurerIconImage.enabled = false;
         adventurerOnMapImage.enabled = true;
         winPanel.SetActive(false);
-        lastroom = room1;
-        ChangeMap(room1);
         
+        ChangeMap(room1);
+
+        ChangeAllAudioSliders();
+
 
         gameOver = false;
         //disable menu
